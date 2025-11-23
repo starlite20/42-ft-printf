@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:17:36 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/23 20:54:51 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/23 23:09:39 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,25 @@ int arg_passed_counter(const char *str)
 	return (arg_count);
 }
 
-void print_single_character(char to_print)
+int print_single_character(char to_print)
 {
-	write(1, &to_print, 1);
+	ft_putchar_fd(to_print, 1);
+	return (1);
 }
 
-int check_format_specifier(char *str, va_list args)
+int print_number(int to_print)
+{
+	ft_putnbr_fd(to_print, 1);
+	return (1);
+}
+
+int print_string(char *to_print)
+{
+	// ft_putstr_fd(to_print, 1);
+	return (write(1, to_print, ft_strlen(to_print)));
+}
+
+int print_argument(char *str, int *printed, va_list args)
 {
 	int skip_val;
 	char fs_val;
@@ -57,26 +70,29 @@ int check_format_specifier(char *str, va_list args)
 	fs_val = is_valid_format(*(str + 1));
 
 	if(fs_val == 'c')
-		print_single_character(va_arg(args, int));
+		*printed += print_single_character(va_arg(args, int));
 	else if(fs_val == 's')
-		print_single_character(va_arg(args, int));
+		*printed += print_string(va_arg(args, char *));
 	else if(fs_val == 'p')
-		print_single_character(va_arg(args, int));
+		*printed += print_single_character(va_arg(args, int));
 	else if(fs_val == 'd')
-		print_single_character(va_arg(args, int));
+		*printed += print_number(va_arg(args, int));
 	else if(fs_val == 'i')
-		print_single_character(va_arg(args, int));
+		*printed += print_single_character(va_arg(args, int));
 	else if(fs_val == 'u')
-		print_single_character(va_arg(args, int));
+		*printed += print_single_character(va_arg(args, int));
 	else if(fs_val == 'x')
-		print_single_character(va_arg(args, int));
+		*printed += print_single_character(va_arg(args, int));
 	else if(fs_val == 'X')
-		print_single_character(va_arg(args, int));
+		*printed += print_single_character(va_arg(args, int));
+	else if(fs_val == '%')
+		*printed += print_single_character('%');
 
 	
 	if(fs_val)
 		skip_val += 1;
 
+		// printf("\n ==> printed %d \n", *printed);
 	return (skip_val);
 }
 
@@ -87,7 +103,7 @@ int ft_printf(const char * str, ...)
 	// int arg_count;
 	int i;
 	int skip;
-	
+	int printed;
 	//arg_count = arg_passed_counter(str);
 
 	// create the list
@@ -97,34 +113,41 @@ int ft_printf(const char * str, ...)
 
 	i = 0;
 	skip = 0;
+	printed = 0;
+	
 
 	while(str[i])
 	{
 		if(str[i] == '%')
 		{
-			skip = check_format_specifier((char *)(str+i), args);
+			skip = print_argument((char *)(str+i), &printed, args);
 			i += skip;
 		}
 		else
 		{
+			printed += write(1, (str+i), 1);
 			i++;
-		}
-			
+		}	
 	}
 	
 
 	// printf("\n %d", va_arg(args, int));
 	// printf("\n '%c'", (unsigned char)(va_arg(args, int)));
 
-	printf("\n%s", str);
-
 	// clean the macro
 	va_end(args);
 
-	return (0);
+	return (printed);
 }
 
-// int main()
-// {
-// 	ft_printf(" chcking one two three %d %c", 100, 'a');
-// }
+int main()
+{
+	int mfp, ofp;
+	printf("\n\n\n### MY VERSION\n");
+	mfp = ft_printf(" chcking one two %% three %d %c %s", 100, 'a', "hellow");
+	printf("\ncount : %d\n\n", mfp);
+	
+	printf("### ORIG VERSION\n");
+	ofp = printf(" chcking one two %% three %d %c %s", 100, 'a', "hellow");
+	printf("\ncount : %d\n\n", ofp);
+}
