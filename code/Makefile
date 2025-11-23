@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ssujaude <ssujaude@student.42.fr>          +#+  +:+       +#+         #
+#    By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/19 19:14:16 by ssujaude          #+#    #+#              #
-#    Updated: 2025/11/19 19:16:40 by ssujaude         ###   ########.fr        #
+#    Updated: 2025/11/23 21:17:54 by ssujaude         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,18 +15,20 @@ CFLAGS = -Wall -Wextra -Werror
 
 NAME = libftprintf.a
 
+
+MAKE = make -C
 RM = rm -f
 
 AR = ar rcs
 
 SRCS = \
-	ft_printf.c
+	ft_printf.c \
 
-BONUS = \
-	
+LIBFT_PATH = libft
+LIBFT = ${LIBFT_PATH}/libft.a
 
-OBJS = ${SRCS:.c=.o}
-BONUS_OBJS = ${BONUS:.c=.o}
+OBJS = ${SRCS:.c=.o} 
+
 
 
 all: $(NAME)
@@ -35,17 +37,19 @@ all: $(NAME)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
+	${MAKE} ${LIBFT_PATH} all
+	cp ${LIBFT} $(NAME)
 	$(AR) $(NAME) $(OBJS)
 
-bonus: ${OBJS} ${BONUS_OBJS}
-	$(AR) ${NAME} $(OBJS) ${BONUS_OBJS}
-
 clean:
-	${RM} ${OBJS} ${BONUS_OBJS}
+	${MAKE} ${LIBFT_PATH} clean
+	${RM} ${OBJS}
 
 fclean: clean
-	$(RM) $(NAME)
+	${MAKE} ${LIBFT_PATH} fclean
+	${RM} ${NAME}
+
 
 re: fclean all
 
-.PHONY: all bonus clean fclean re 
+.PHONY: all clean fclean re 
