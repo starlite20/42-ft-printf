@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:17:36 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/23 23:30:29 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/23 23:45:31 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,12 @@ int print_argument(char *str, int *printed, va_list args)
 		*printed += print_single_character(va_arg(args, int));
 	else if(fs_val == 's')
 		*printed += print_string(va_arg(args, char *));
-	else if(fs_val == 'p')
-		*printed += print_single_character(va_arg(args, int));
 	else if(fs_val == 'd')
 		*printed += print_number(va_arg(args, int));
+	
+	else if(fs_val == 'p')
+		*printed += print_single_character(va_arg(args, int));
+
 	else if(fs_val == 'i')
 		*printed += print_single_character(va_arg(args, int));
 	else if(fs_val == 'u')
@@ -92,6 +94,7 @@ int print_argument(char *str, int *printed, va_list args)
 		*printed += print_single_character(va_arg(args, int));
 	else if(fs_val == 'X')
 		*printed += print_single_character(va_arg(args, int));
+
 	else if(fs_val == '%')
 		*printed += print_percentage('%');
 
