@@ -6,11 +6,11 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:17:36 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/24 23:58:05 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/25 00:05:34 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprint.h"
+#include "ft_printf.h"
 
 int	ft_put_nbr_len(int n)
 {
@@ -234,17 +234,21 @@ int ft_printf(const char * str, ...)
 	return (printed);
 }
 
-int main()
-{
-	
-	int mfp, ofp;
-	unsigned int num = 123456789;
 
-	printf("\n\n\n### MY VERSION\n");
-	mfp = ft_printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p] \t x:[%x] \t X:[%X] ", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL, num, num);
-	printf("\ncount : %d\n\n", mfp);
+
+
+
+// int main()
+// {
 	
-	printf("### ORIG VERSION\n");
-	ofp = printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p] \t x:[%x] \t X:[%X] ", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL, num, num);
-	printf("\ncount : %d\n\n", ofp);
-}
+// 	int mfp, ofp;
+// 	unsigned int num = 123456789;
+
+// 	printf("\n\n\n### MY VERSION\n");
+// 	mfp = ft_printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p] \t x:[%x] \t X:[%X] ", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL, num, num);
+// 	printf("\ncount : %d\n\n", mfp);
+	
+// 	printf("### ORIG VERSION\n");
+// 	ofp = printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p] \t x:[%x] \t X:[%X] ", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL, num, num);
+// 	printf("\ncount : %d\n\n", ofp);
+// }
