@@ -6,13 +6,13 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:17:36 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/23 23:45:31 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/24 21:44:37 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprint.h"
 
-int	ft_putnbr_len(int n)
+int	ft_put_nbr_len(int n)
 {
 	int printed;
 
@@ -31,7 +31,7 @@ int	ft_putnbr_len(int n)
 		printed++;
 	}
 	if (n >= 10)
-		printed += ft_putnbr_len(n / 10);
+		printed += ft_put_nbr_len(n / 10);
 	
 	ft_putchar_fd(('0' + (n % 10)), 1);
 	printed++;
@@ -39,6 +39,21 @@ int	ft_putnbr_len(int n)
 	return (printed);
 }
 
+
+int	ft_put_unbr_len(unsigned int n)
+{
+	int printed;
+
+	printed = 0;
+
+	if (n >= 10)
+		printed += ft_put_unbr_len(n / 10);
+	
+	ft_putchar_fd(('0' + (n % 10)), 1);
+	printed++;
+	
+	return (printed);
+}
 
 
 int print_single_character(char to_print)
@@ -49,7 +64,13 @@ int print_single_character(char to_print)
 
 int print_number(int to_print)
 {
-	return (ft_putnbr_len(to_print));
+	return (ft_put_nbr_len(to_print));
+}
+
+
+int print_unsigned_number(unsigned int to_print)
+{
+	return (ft_put_unbr_len(to_print));
 }
 
 int print_string(char *to_print)
@@ -80,20 +101,21 @@ int print_argument(char *str, int *printed, va_list args)
 		*printed += print_single_character(va_arg(args, int));
 	else if(fs_val == 's')
 		*printed += print_string(va_arg(args, char *));
-	else if(fs_val == 'd')
+	else if((fs_val == 'd') || (fs_val == 'i'))
 		*printed += print_number(va_arg(args, int));
+
+	else if(fs_val == 'u')
+		*printed += print_unsigned_number(va_arg(args, int));
 	
+
 	else if(fs_val == 'p')
 		*printed += print_single_character(va_arg(args, int));
 
-	else if(fs_val == 'i')
-		*printed += print_single_character(va_arg(args, int));
-	else if(fs_val == 'u')
-		*printed += print_single_character(va_arg(args, int));
 	else if(fs_val == 'x')
 		*printed += print_single_character(va_arg(args, int));
 	else if(fs_val == 'X')
 		*printed += print_single_character(va_arg(args, int));
+
 
 	else if(fs_val == '%')
 		*printed += print_percentage('%');
@@ -147,12 +169,13 @@ int ft_printf(const char * str, ...)
 
 int main()
 {
+	
 	int mfp, ofp;
 	printf("\n\n\n### MY VERSION\n");
-	mfp = ft_printf(" chcking one  %d %d two %% three %d %c %s", 100,  5, -545132323, 'a', "hellow");
+	mfp = ft_printf(" chcking one  %d %d two %% three %d %c %s \nu:%u", 100,  5, -545132323, 'a', "hellow", UINT_MAX);
 	printf("\ncount : %d\n\n", mfp);
 	
 	printf("### ORIG VERSION\n");
-	ofp = printf(" chcking one  %d %d two %% three %d %c %s", 100,  5, -545132323, 'a', "hellow");
+	ofp = printf(" chcking one  %d %d two %% three %d %c %s \nu:%u", 100,  5, -545132323, 'a', "hellow", UINT_MAX);
 	printf("\ncount : %d\n\n", ofp);
 }
