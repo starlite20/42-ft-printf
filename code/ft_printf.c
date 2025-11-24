@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:17:36 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/25 00:05:34 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/25 00:11:07 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int print_unsigned_number(unsigned int to_print)
 
 int print_string(char *to_print)
 {
+	if(to_print == NULL)
+		return (write(1, "(null)", 6));	
 	return (write(1, to_print, ft_strlen(to_print)));
 }
 
@@ -251,4 +253,21 @@ int ft_printf(const char * str, ...)
 // 	printf("### ORIG VERSION\n");
 // 	ofp = printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p] \t x:[%x] \t X:[%X] ", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL, num, num);
 // 	printf("\ncount : %d\n\n", ofp);
+
+
+
+// 	printf("\n\n### ORIG VERSION\n");
+// 	ofp = printf(" NULL %s NULL ", NULL);
+// 	printf("\ncount : %d\n\n", ofp);
+	
+// 	printf("\n\n\n### MY VERSION\n");
+// 	mfp = ft_printf(" NULL %s NULL ", NULL);
+// 	printf("\ncount : %d\n\n", mfp);
+
+	
+	
+
+
+
+
 // }
