@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:17:36 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/24 23:43:07 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/24 23:58:05 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,39 @@ int print_percentage()
 }
 
 
+
+void	ft_put_hexnbr_len(unsigned int to_print, char hex_format, int *printed)
+{
+	if(to_print >= 16)
+	{
+		ft_put_hexnbr_len(to_print/16, hex_format, printed);
+		ft_put_hexnbr_len(to_print%16, hex_format, printed);
+	}
+	else
+	{
+		if(to_print >= 10)
+		{
+			if(hex_format == 'x')
+				*printed += print_single_character((to_print - 10) + 'a');
+			else
+				*printed += print_single_character((to_print - 10) + 'A');
+		}
+		else
+			*printed += print_single_character(to_print + '0');
+	}
+}
+
+
+int print_hexnum(unsigned int to_print, char hex_format)
+{
+	int printed;
+
+	printed = 0;
+	ft_put_hexnbr_len(((unsigned int)to_print), hex_format, &printed);
+
+	return (printed);
+}
+
 void print_hexaddress(unsigned long long to_print, int *printed)
 {
 	if(to_print >= 16)
@@ -121,6 +154,10 @@ int print_address(void *to_print)
 
 
 
+
+
+
+
 int print_argument(char *str, int *printed, va_list args)
 {
 	int skip_val;
@@ -138,16 +175,13 @@ int print_argument(char *str, int *printed, va_list args)
 
 	else if(fs_val == 'u')
 		*printed += print_unsigned_number(va_arg(args, int));
-	
-
 	else if(fs_val == 'p')
 		*printed += print_address(va_arg(args, void *));
 
 		
-	else if(fs_val == 'x')
-		*printed += print_single_character(va_arg(args, int));
-	else if(fs_val == 'X')
-		*printed += print_single_character(va_arg(args, int));
+	else if((fs_val == 'x') || (fs_val == 'X'))
+		*printed += print_hexnum(va_arg(args, unsigned int), fs_val);
+
 
 
 	else if(fs_val == '%')
@@ -204,11 +238,13 @@ int main()
 {
 	
 	int mfp, ofp;
+	unsigned int num = 123456789;
+
 	printf("\n\n\n### MY VERSION\n");
-	mfp = ft_printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p]", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL);
+	mfp = ft_printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p] \t x:[%x] \t X:[%X] ", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL, num, num);
 	printf("\ncount : %d\n\n", mfp);
 	
 	printf("### ORIG VERSION\n");
-	ofp = printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p]", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL);
+	ofp = printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p] \t x:[%x] \t X:[%X] ", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL, num, num);
 	printf("\ncount : %d\n\n", ofp);
 }
