@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:17:36 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/24 21:44:37 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/24 23:43:07 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ int	ft_put_unbr_len(unsigned int n)
 
 int print_single_character(char to_print)
 {
-	ft_putchar_fd(to_print, 1);
-	return (1);
+	return (write(1, &to_print, 1));
 }
 
 int print_number(int to_print)
@@ -84,6 +83,39 @@ int print_percentage()
 }
 
 
+void print_hexaddress(unsigned long long to_print, int *printed)
+{
+	if(to_print >= 16)
+	{
+		print_hexaddress(to_print/16, printed);
+		print_hexaddress(to_print%16, printed);
+	}
+	else
+	{
+		if(to_print >= 10)
+			*printed += print_single_character((to_print - 10) + 'a');
+		else
+			*printed += print_single_character(to_print + '0');
+	}
+}
+
+int print_address(void *to_print)
+{
+	int printed;
+
+	printed = 0;
+
+	if(to_print == NULL)
+	{
+		printed += print_string("(nil)");
+	}
+	else
+	{
+		printed += print_string("0x");
+		print_hexaddress(((unsigned long long)to_print), &printed);
+	}
+	return (printed);
+}
 
 
 
@@ -109,8 +141,9 @@ int print_argument(char *str, int *printed, va_list args)
 	
 
 	else if(fs_val == 'p')
-		*printed += print_single_character(va_arg(args, int));
+		*printed += print_address(va_arg(args, void *));
 
+		
 	else if(fs_val == 'x')
 		*printed += print_single_character(va_arg(args, int));
 	else if(fs_val == 'X')
@@ -172,10 +205,10 @@ int main()
 	
 	int mfp, ofp;
 	printf("\n\n\n### MY VERSION\n");
-	mfp = ft_printf(" chcking one  %d %d two %% three %d %c %s \nu:%u", 100,  5, -545132323, 'a', "hellow", UINT_MAX);
+	mfp = ft_printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p]", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL);
 	printf("\ncount : %d\n\n", mfp);
 	
 	printf("### ORIG VERSION\n");
-	ofp = printf(" chcking one  %d %d two %% three %d %c %s \nu:%u", 100,  5, -545132323, 'a', "hellow", UINT_MAX);
+	ofp = printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p]", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL);
 	printf("\ncount : %d\n\n", ofp);
 }
