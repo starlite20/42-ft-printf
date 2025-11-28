@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
+/*   By: ssujaude <ssujaude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:18:21 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/25 00:03:50 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/27 19:14:38 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 #include <stdarg.h>
 # include "libft/libft.h"
+
 
 
 int ft_printf(const char * str, ...);

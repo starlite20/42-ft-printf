@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
+/*   By: ssujaude <ssujaude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:17:36 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/25 00:11:07 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/27 20:11:48 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int print_address(void *to_print)
 
 	if(to_print == NULL)
 	{
-		printed += print_string("(nil)");
+		printed += print_string("0x0");
 	}
 	else
 	{
@@ -174,20 +174,14 @@ int print_argument(char *str, int *printed, va_list args)
 		*printed += print_string(va_arg(args, char *));
 	else if((fs_val == 'd') || (fs_val == 'i'))
 		*printed += print_number(va_arg(args, int));
-
 	else if(fs_val == 'u')
 		*printed += print_unsigned_number(va_arg(args, int));
 	else if(fs_val == 'p')
 		*printed += print_address(va_arg(args, void *));
-
-		
 	else if((fs_val == 'x') || (fs_val == 'X'))
 		*printed += print_hexnum(va_arg(args, unsigned int), fs_val);
-
-
-
 	else if(fs_val == '%')
-		*printed += print_percentage('%');
+		*printed += print_percentage();
 
 	
 	if(fs_val)
@@ -240,34 +234,44 @@ int ft_printf(const char * str, ...)
 
 
 
-// int main()
-// {
+int main()
+{
 	
-// 	int mfp, ofp;
-// 	unsigned int num = 123456789;
+	int mfp, ofp;
+	unsigned int num = 123456789;
+	int nnum = -123456789;
 
-// 	printf("\n\n\n### MY VERSION\n");
-// 	mfp = ft_printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p] \t x:[%x] \t X:[%X] ", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL, num, num);
-// 	printf("\ncount : %d\n\n", mfp);
+	// printf("\n\n\n### MY VERSION\n");
+	// mfp = ft_printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p] \t x:[%x] \t X:[%X] ", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL, num, num);
+	// printf("\ncount : %d\n\n", mfp);
 	
-// 	printf("### ORIG VERSION\n");
-// 	ofp = printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p] \t x:[%x] \t X:[%X] ", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL, num, num);
-// 	printf("\ncount : %d\n\n", ofp);
+	// printf("### ORIG VERSION\n");
+	// ofp = printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p] \t x:[%x] \t X:[%X] ", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL, num, num);
+	// printf("\ncount : %d\n\n", ofp);
 
-
-
-// 	printf("\n\n### ORIG VERSION\n");
-// 	ofp = printf(" NULL %s NULL ", NULL);
-// 	printf("\ncount : %d\n\n", ofp);
-	
-// 	printf("\n\n\n### MY VERSION\n");
-// 	mfp = ft_printf(" NULL %s NULL ", NULL);
-// 	printf("\ncount : %d\n\n", mfp);
 
 	
+
+	// printf("\n\n### ORIG VERSION\n");
+	// ofp = printf(" NULL %s NULL ", NULL);
+	// printf("\ncount : %d\n\n", ofp);
+	
+	// printf("\n### MY VERSION\n");
+	// mfp = ft_printf(" NULL %s NULL ", NULL);
+	// printf("\ncount : %d\n\n", mfp);
+
+	
+
+	printf("\n\n### ORIG VERSION\n");
+	ofp = printf(" [%+d]", num);
+	printf("\ncount : %d\n\n", ofp);
+	
+	printf("\n### MY VERSION\n");
+	mfp = ft_printf(" [%+d]", num);
+	printf("\ncount : %d\n\n", mfp);
+	
 	
 
 
 
-
-// }
+}
