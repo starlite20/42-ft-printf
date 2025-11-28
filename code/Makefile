@@ -6,7 +6,7 @@
 #    By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/19 19:14:16 by ssujaude          #+#    #+#              #
-#    Updated: 2025/11/23 21:17:54 by ssujaude         ###   ########.fr        #
+#    Updated: 2025/11/29 01:14:13 by ssujaude         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ RM = rm -f
 AR = ar rcs
 
 SRCS = \
-	ft_printf.c \
+	ft_printf.c ft_print_utils_0.c\
 
 LIBFT_PATH = libft
 LIBFT = ${LIBFT_PATH}/libft.a

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssujaude <ssujaude@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:18:21 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/27 19:14:38 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/29 01:16:04 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,30 @@
 
 
 int ft_printf(const char * str, ...);
+
+typedef struct s_flags
+{
+	int	hashtag;
+	int plus;
+	int space;
+	int dot;
+	int zero;
+	int minus;
+	int width;
+}	fs_flags;
+
+
+int print_single_character(char to_print);
+int print_number(int to_print, fs_flags *flags);
+int print_unsigned_number(unsigned int to_print);
+int print_string(char *to_print);
+int print_percentage();
+int print_hexnum(unsigned int to_print, char hex_format);
+void print_hexaddress(unsigned long long to_print, int *printed);
+int print_address(void *to_print);
+int	ft_put_nbr_len(int n, fs_flags *flags);
+int	ft_put_unbr_len(unsigned int n);
+void	ft_put_hexnbr_len(unsigned int to_print, char hex_format, int *printed);
+
 
 #endif
