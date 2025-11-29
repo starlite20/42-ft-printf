@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:18:21 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/29 19:07:12 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/30 01:36:15 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@ int	ft_put_unbr_len(unsigned int n);
 void	ft_put_hexnbr_len(unsigned int to_print, char hex_format, int *printed);
 
 int num_len(long long num);
+int print_num_based_on_flag(fs_flags *flags, int num);
+
 
 #endif

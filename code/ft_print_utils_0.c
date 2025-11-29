@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 01:11:02 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/29 19:29:33 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/30 02:03:04 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@ int print_single_character(char to_print)
 	return (write(1, &to_print, 1));
 }
 
-int print_number(int to_print, fs_flags *flags)
-{
-	// printf("\n\t=> print number");
-	return (ft_put_nbr_len(to_print, flags));
-}
 
 int print_unsigned_number(unsigned int to_print)
 {
@@ -30,12 +25,40 @@ int print_unsigned_number(unsigned int to_print)
 	return (ft_put_unbr_len(to_print));
 }
 
+
+
+
+int print_string_based_on_flag(fs_flags *flags, char *to_print, int len)
+{
+	int printed = 0;
+
+	ft_strlen(to_print);
+	if(flags->width > 0)
+	{
+		if(flags->width > len)
+		{
+			while(printed < (flags->width - len))
+				printed += print_single_character(' ');
+		}
+		flags->width = -1;
+	}
+	return (printed);
+}
+
+
 int print_string(char *to_print)
 {
 	// printf("\n\t=> print string");
+	int printed;
+	int len;
+
+	printed = 0;
 	if(to_print == NULL)
 		return (write(1, "(null)", 6));	
-	return (write(1, to_print, ft_strlen(to_print)));
+	len = ft_strlen(to_print);
+	//printed += print_string_based_on_flag(flags, to_print, len);
+	printed += write(1, to_print, len);
+	return (printed);
 }
 
 int print_percentage()
@@ -111,7 +134,21 @@ int num_len(long long num)
 	return (len);
 }
 
-int print_based_on_flag(fs_flags *flags, int num)
+
+int print_number(int to_print, fs_flags *flags)
+{
+	// printf("\n\t=> print number");
+	int printed;
+	printed = ft_put_nbr_len(to_print, flags);
+	if(flags->minus == 1)
+	{
+		flags->minus = 2;
+		printed += print_num_based_on_flag(flags, to_print);
+	}
+	return (printed);
+}
+
+int print_num_based_on_flag(fs_flags *flags, int num)
 {
 	int printed = 0;
 	int len;
@@ -131,12 +168,18 @@ int print_based_on_flag(fs_flags *flags, int num)
 	}
 	else if(flags->width > 0)
 	{
-		if(flags->width > len)
+		if((flags->minus == 0) || (flags->minus == 2))
 		{
-			while(printed < (flags->width - len))
-				printed += print_single_character(' ');
+			if(flags->width > len)
+			{
+				while(printed < (flags->width - len))
+					printed += print_single_character(' ');
+			}
+			flags->width = -1;
+			
+			if(flags->minus == 2)
+				flags->minus= -1;
 		}
-		flags->width = -1;
 	}
 	return (printed);
 }
@@ -148,7 +191,7 @@ int	ft_put_nbr_len(int n, fs_flags *flags)
 	// printf("\n\t put nbr len : %d", n);
 	printed = 0;
 
-	printed += print_based_on_flag(flags, n);
+	printed += print_num_based_on_flag(flags, n);
 	if (n == -2147483648)
 	{
 		ft_putchar_fd('-', 1);
