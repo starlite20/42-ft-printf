@@ -46,10 +46,10 @@ int main()
 	// ft_printf("\n\n [%10d]\n\n", 512);
 	
 
-
 	char *null_str = NULL;
     int ret;
 	
+/*
 	ft_printf("[%%d] Expected: [100] | Actual: ");
     ret = ft_printf("[%d]", 100);
     printf(" (Count: %d)\n\n", ret);
@@ -84,20 +84,26 @@ int main()
     ret = ft_printf("[%10d]", 123);
     printf(" (Count: %d)\n\n", ret);
 
-    // Test 8: [%10d]-123[      -123]
-    ft_printf("[%%10d] Expected: [      -123] | Actual: ");
-    ret = ft_printf("[%10d]", -123);
+*/
+	// Test 8: [%10d]-123[      -123]
+    ft_printf("[%%+10d] Expected: [      +123] | Actual: ");
+    ret = ft_printf("[%+10d]", 123);
     printf(" (Count: %d)\n\n", ret);
-
 
 
 	// Test 8: [%10d]-123[      -123]
-    printf("[%%-10d] Expected: [%+-10d] || actual : ", 123);
-    ret = ft_printf(" => [%+-10d]", 123);
+    ft_printf("[%%+-10d] Expected: [      -123] | Actual: ");
+    ret = ft_printf("[%+-10d]", 123);
     printf(" (Count: %d)\n\n", ret);
 
 
-	
+	// Test 8: [%10d]-123[      -123]
+    // printf("\n[%%-10d] Expected:\t\t[%+-10d] \n", 123);
+    // ret = ft_printf("\n\n =>\t\t\t\t[%+-10d] \n", 123);
+    // printf(" (Count: %d)\n\n", ret);
+
+
+/*
     // Test 9: [%10s]"hi"[        hi] (Test width padding with spaces)
     ft_printf("[%%10s] Expected: [        hi] | Actual: ");
 	printf("\n[%10s] \t", "hello123456789");
@@ -114,5 +120,5 @@ int main()
     ret = ft_printf("[%p]", &mfp);
     printf(" (Count: %d) *Count varies based on address size/format\n\n", ret);
 
-	
+	*/
 }

@@ -6,7 +6,7 @@
 #    By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/19 19:14:16 by ssujaude          #+#    #+#              #
-#    Updated: 2025/11/29 01:14:13 by ssujaude         ###   ########.fr        #
+#    Updated: 2025/11/30 02:19:47 by ssujaude         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,8 @@ OBJS = ${SRCS:.c=.o}
 
 all: $(NAME)
 
+bonus: $(NAME)
+
 .o: .c
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -52,4 +54,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re 
+.PHONY: all clean fclean re bonus
