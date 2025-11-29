@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 01:11:02 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/29 01:16:02 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/29 16:11:50 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,25 @@
 
 int print_single_character(char to_print)
 {
+	// printf("\n\t=> print single character");
 	return (write(1, &to_print, 1));
 }
 
 int print_number(int to_print, fs_flags *flags)
 {
+	// printf("\n\t=> print number");
 	return (ft_put_nbr_len(to_print, flags));
 }
 
 int print_unsigned_number(unsigned int to_print)
 {
+	// printf("\n\t=> print unsigned num");
 	return (ft_put_unbr_len(to_print));
 }
 
 int print_string(char *to_print)
 {
+	// printf("\n\t=> print string");
 	if(to_print == NULL)
 		return (write(1, "(null)", 6));	
 	return (write(1, to_print, ft_strlen(to_print)));
@@ -36,11 +40,13 @@ int print_string(char *to_print)
 
 int print_percentage()
 {
+	// printf("\n\t=> print percentage");
 	return (write(1, "%", 1));
 }
 
 int print_hexnum(unsigned int to_print, char hex_format)
 {
+	// printf("\n\t=> print hex num");
 	int printed;
 
 	printed = 0;
@@ -51,6 +57,7 @@ int print_hexnum(unsigned int to_print, char hex_format)
 
 void print_hexaddress(unsigned long long to_print, int *printed)
 {
+	// printf("\n\t=> print hex addr");
 	if(to_print >= 16)
 	{
 		print_hexaddress(to_print/16, printed);
@@ -67,6 +74,7 @@ void print_hexaddress(unsigned long long to_print, int *printed)
 
 int print_address(void *to_print)
 {
+	// printf("\n\t=> print address");
 	int printed;
 
 	printed = 0;
@@ -89,6 +97,7 @@ int	ft_put_nbr_len(int n, fs_flags *flags)
 {
 	int printed;
 
+	// printf("\n\t put nbr len : %d", n);
 	printed = 0;
 	if (n == -2147483648)
 	{
@@ -102,10 +111,11 @@ int	ft_put_nbr_len(int n, fs_flags *flags)
 		ft_putchar_fd('-', 1);
 		n *= -1;
 		printed++;
+		flags->plus = 0;
 	}
 	if(flags->plus == 1)
 	{
-		printed = print_single_character('+');
+		printed += print_single_character('+');
 		flags->plus = 0;
 	}
 	if (n >= 10)

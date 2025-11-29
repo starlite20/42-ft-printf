@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:18:21 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/29 01:16:04 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/29 15:29:34 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ typedef struct s_flags
 	int width;
 }	fs_flags;
 
+int print_argument(char *str, int *printed, va_list args);
+int process_flag(char character, fs_flags *flags);
+void initiate_flags(fs_flags *flags);
+int is_format_flag(char character);
+int is_format_specifier(char character);
 
 int print_single_character(char to_print);
 int print_number(int to_print, fs_flags *flags);

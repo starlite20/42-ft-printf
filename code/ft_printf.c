@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:17:36 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/29 01:16:44 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/29 16:09:41 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void initiate_flags(fs_flags *flags)
 
 int process_flag(char character, fs_flags *flags)
 {
-	if(is_format_flag(character))
+	if(is_format_flag(character) != -1)
 	{
 		if(character == '+')
 			flags->plus = 1;
@@ -76,47 +76,48 @@ int print_argument(char *str, int *printed, va_list args)
 	fs_flags flags;
 
 
+	i = 1;
 	skip_val = 1;
 	fs_val = *(str+1);
 	initiate_flags(&flags);
 
 	if(is_format_flag(fs_val) == 1)
 	{
-		i = 1;
-		while(process_flag(*(str+i+1), &flags))
+		while(*(str+i) && (process_flag(*(str+i), &flags) == 1))
 			i++;
-		if(is_format_specifier(*(str+i+1)))
-			fs_val = *(str+i+1);
+		if(is_format_specifier(*(str+i)))
+			fs_val = *(str+i);
 	}
-	
-	if(is_format_specifier(fs_val) == 1)
-	{
-		if(fs_val == 'c')
-			*printed += print_single_character(va_arg(args, int));
-		else if(fs_val == 's')
-			*printed += print_string(va_arg(args, char *));
-		else if((fs_val == 'd') || (fs_val == 'i'))
-			*printed += print_number(va_arg(args, int), &flags);
-		else if(fs_val == 'u')
-			*printed += print_unsigned_number(va_arg(args, int));
-		else if(fs_val == 'p')
-			*printed += print_address(va_arg(args, void *));
-		else if((fs_val == 'x') || (fs_val == 'X'))
-			*printed += print_hexnum(va_arg(args, unsigned int), fs_val);
-		else if(fs_val == '%')
-			*printed += print_percentage();
-	}
-	
-	else
-	{
-		//already printed
-		*printed += print_single_character(va_arg(args, int));
-	}
-	
-
 	
 	if(fs_val)
-		skip_val += 1;
+	{
+		if(is_format_specifier(fs_val) == 1)
+		{
+			if(fs_val == 'c')
+				*printed += print_single_character(va_arg(args, int));
+			else if(fs_val == 's')
+				*printed += print_string(va_arg(args, char *));
+			else if((fs_val == 'd') || (fs_val == 'i'))
+				*printed += print_number(va_arg(args, int), &flags);
+			else if(fs_val == 'u')
+				*printed += print_unsigned_number(va_arg(args, int));
+			else if(fs_val == 'p')
+				*printed += print_address(va_arg(args, void *));
+			else if((fs_val == 'x') || (fs_val == 'X'))
+				*printed += print_hexnum(va_arg(args, unsigned int), fs_val);
+			else if(fs_val == '%')
+				*printed += print_percentage();
+		}
+		else
+		{
+			//already printed
+			*printed += print_single_character(fs_val);
+		}
+	} 
+	
+	if(fs_val)
+		skip_val += i;
+
 
 		// printf("\n ==> printed %c \n", fs_val);
 	return (skip_val);
@@ -144,6 +145,7 @@ int ft_printf(const char * str, ...)
 
 	while(str[i])
 	{
+		// printf("\n ===> in ft_printf loop %d : %c", i, str[i]);
 		if(str[i] == '%')
 		{
 			skip = print_argument((char *)(str+i), &printed, args);
@@ -161,56 +163,3 @@ int ft_printf(const char * str, ...)
 
 	return (printed);
 }
-
-
-
-
-
-int main()
-{
-	
-	int mfp, ofp;
-	unsigned int num = 123456789;
-	int nnum = -123456789;
-
-	// printf("\n\n\n### MY VERSION\n");
-	// mfp = ft_printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p] \t x:[%x] \t X:[%X] ", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL, num, num);
-	// printf("\ncount : %d\n\n", mfp);
-	
-	// printf("### ORIG VERSION\n");
-	// ofp = printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p] \t x:[%x] \t X:[%X] ", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL, num, num);
-	// printf("\ncount : %d\n\n", ofp);
-
-
-	
-
-	// printf("\n\n### ORIG VERSION\n");
-	// ofp = printf(" NULL %s NULL ", NULL);
-	// printf("\ncount : %d\n\n", ofp);
-	
-	// printf("\n### MY VERSION\n");
-	// mfp = ft_printf(" NULL %s NULL ", NULL);
-	// printf("\ncount : %d\n\n", mfp);
-
-	
-
-	// printf("\n\n### ORIG VERSION\n");
-	// ofp = printf(" [%+d]", num);
-	// printf("\ncount : %d\n\n", ofp);
-	
-	// printf("\n### MY VERSION\n");
-	// mfp = ft_printf(" [%+d]", num);
-	// printf("\ncount : %d\n\n", mfp);
-	
-	printf("\n %+d", 123);
-	ft_printf("\n %+d", 123);
-	// printf("\n %+i", 123);
-	// printf("\n %+c", 'a');
-	
-}
-
-
-
-
-
-
