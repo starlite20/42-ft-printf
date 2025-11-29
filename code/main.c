@@ -36,9 +36,70 @@ int main()
 	// mfp = ft_printf(" [%+d]", num);
 	// printf("\ncount : %d\n\n", mfp);
 	
-	printf("\n\nORIG [%++d] [%+d] [%+d].\n\n", 123, -1524, 1900);
-	ft_printf("\n\nNEWW [%++d] [%+d] [%+d].\n\n", 123, -1524, 1900);
-	// printf("\n %+i", 123);
-	// printf("\n %+c", 'a');
+	// printf("\n\nORIG [%++i] [%+i] [%+i].\n\n", 123, -1524, 1900);
+	// ft_printf("\n\nNEWW [%++i] [%+i] [%+i].\n\n", 123, -1524, 1900);
 	
+	// printf("\n [% +5c]", 'a');
+	// printf("\n [%0+5d]", 'a');
+	
+	// printf("\n\n [%10d]\n\n", 512);
+	// ft_printf("\n\n [%10d]\n\n", 512);
+	
+
+
+	char *null_str = NULL;
+    int ret;
+	ft_printf("[%%d] Expected: [100] | Actual: ");
+    ret = ft_printf("[%d]", 100);
+    printf(" (Count: %d)\n\n", ret);
+
+    // Test 2: [%+d]100[+100] (Test the + flag)
+    ft_printf("[%%+d] Expected: [+100] | Actual: ");
+    ret = ft_printf("[%+d]", 100);
+    printf(" (Count: %d)\n\n", ret);
+
+    // Test 3: [% d]100[ 100] (Test the space flag)
+    ft_printf("[%% d] Expected: [ 100] | Actual: ");
+    ret = ft_printf("[% d]", 100);
+    printf(" (Count: %d)\n\n", ret);
+
+    // Test 4: [%+d]-100[-100] (Test + flag is ignored for negative)
+    ft_printf("[%%+d] Expected: [-100] | Actual: ");
+    ret = ft_printf("[%+d]", -100);
+    printf(" (Count: %d)\n\n", ret);
+
+    // Test 5: [% d]-100[-100] (Test space flag is ignored for negative)
+    ft_printf("[%% d] Expected: [-100] | Actual: ");
+    ret = ft_printf("[% d]", -100);
+    printf(" (Count: %d)\n\n", ret);
+
+    // Test 6: [% d]0[ 0]
+    ft_printf("[%% d] Expected: [ 0] | Actual: ");
+    ret = ft_printf("[% d]", 0);
+    printf(" (Count: %d)\n\n", ret);
+
+    // Test 7: [%10d]123[       123] (Test width padding with spaces)
+    ft_printf("[%%10d] Expected: [       123] | Actual: ");
+    ret = ft_printf("[%10d]", 123);
+    printf(" (Count: %d)\n\n", ret);
+
+    // Test 8: [%10d]-123[      -123]
+    ft_printf("[%%10d] Expected: [      -123] | Actual: ");
+    ret = ft_printf("[%10d]", -123);
+    printf(" (Count: %d)\n\n", ret);
+
+    // Test 9: [%10s]"hi"[        hi] (Test width padding with spaces)
+    ft_printf("[%%10s] Expected: [        hi] | Actual: ");
+    ret = ft_printf("[%10s]", "hi");
+    printf(" (Count: %d)\n\n", ret);
+
+    // Test 10: [%s]NULL[(null)] (Test null string handling)
+    ft_printf("[%%s] NULL Expected: [(null)] | Actual: ");
+    ret = ft_printf("[%s]", null_str);
+    printf(" (Count: %d)\n\n", ret);
+
+    // Test 11: [%p]&mfp[0x...address...] (Pointer test)
+    ft_printf("[%%p] &mfp Expected: [0x...address...] | Actual: ");
+    ret = ft_printf("[%p]", &mfp);
+    printf(" (Count: %d) *Count varies based on address size/format\n\n", ret);
 }

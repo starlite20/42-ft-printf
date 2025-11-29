@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:17:36 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/29 16:09:41 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/29 19:19:48 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,36 @@ void initiate_flags(fs_flags *flags)
 }
 
 
+
+void flag_printer(fs_flags *flags)
+{
+	printf("\n\n\t|| +%d  -%d     space %d = w %d    . %d = prec %d     # %d    0 %d  ||\n\n", flags->plus, flags->minus, flags->space, flags->width, flags->dot, flags->precision, flags->hashtag, flags->zero);
+}
+
+
 int process_flag(char character, fs_flags *flags)
 {
 	if(is_format_flag(character) != -1)
 	{
 		if(character == '+')
+		{
 			flags->plus = 1;
+			flags->space = 0;
+		}
 		else if(character == '0')
 			flags->zero = 1;
 		else if(character == '-')
+		{
 			flags->minus = 1;
+			flags->zero = 0;
+		}
 		else if(character == '#')
 			flags->hashtag = 1;
 		else if(character == '.')
+		{
 			flags->dot = 1;
+			flags->zero = 0;
+		}
 		else if(character == ' ')
 			flags->space = 1;
 
@@ -66,6 +82,19 @@ int process_flag(char character, fs_flags *flags)
 }
 
 
+int process_numflag(char *str, fs_flags *flags)
+{
+	int value;
+
+	value = ft_atoi(str);
+
+	if(flags->dot == 1)
+		flags->precision = value;
+	else
+		flags->width = value;
+	
+	return (num_len(value));
+}
 
 
 int print_argument(char *str, int *printed, va_list args)
@@ -73,21 +102,27 @@ int print_argument(char *str, int *printed, va_list args)
 	int skip_val;
 	char fs_val;
 	int i;
-	fs_flags flags;
+	fs_flags *flags;
 
 
+	flags = ft_calloc(1, sizeof(fs_flags));
 	i = 1;
 	skip_val = 1;
 	fs_val = *(str+1);
-	initiate_flags(&flags);
+	initiate_flags(flags);
 
-	if(is_format_flag(fs_val) == 1)
+	while(*(str+i))
 	{
-		while(*(str+i) && (process_flag(*(str+i), &flags) == 1))
+		if(process_flag(*(str+i), flags) == 1)
 			i++;
-		if(is_format_specifier(*(str+i)))
-			fs_val = *(str+i);
+		else if(ft_isdigit(*(str+i)))
+			i+=process_numflag(str+i, flags);
+		else
+			break;
 	}
+	if(is_format_specifier(*(str+i)))
+		fs_val = *(str+i);
+
 	
 	if(fs_val)
 	{
@@ -98,7 +133,7 @@ int print_argument(char *str, int *printed, va_list args)
 			else if(fs_val == 's')
 				*printed += print_string(va_arg(args, char *));
 			else if((fs_val == 'd') || (fs_val == 'i'))
-				*printed += print_number(va_arg(args, int), &flags);
+				*printed += print_number(va_arg(args, int), flags);
 			else if(fs_val == 'u')
 				*printed += print_unsigned_number(va_arg(args, int));
 			else if(fs_val == 'p')
@@ -118,8 +153,9 @@ int print_argument(char *str, int *printed, va_list args)
 	if(fs_val)
 		skip_val += i;
 
-
-		// printf("\n ==> printed %c \n", fs_val);
+	// printf("\n ==> printed %c \n", fs_val);
+	//flag_printer(flags);
+	free(flags);
 	return (skip_val);
 }
 

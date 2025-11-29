@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 01:11:02 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/29 16:11:50 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/29 19:29:33 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,62 @@ int print_address(void *to_print)
 
 
 
+
+
+int num_len(long long num)
+{
+	int len = 0;
+	if (num < 0)
+	{
+		len++;
+		num *= -1;
+	}
+	while(num > 0)
+	{
+		num /= 10;
+		len++;
+	}
+	return (len);
+}
+
+int print_based_on_flag(fs_flags *flags, int num)
+{
+	int printed = 0;
+	int len;
+
+	len = num_len(num);
+	if(flags->plus == 1)
+	{
+		if(num >= 0)
+			printed += print_single_character('+');
+		flags->plus = -1;
+	}
+	else if(flags->space == 1)
+	{
+		if(num >= 0)
+			printed += print_single_character(' ');
+		flags->space = -1;
+	}
+	else if(flags->width > 0)
+	{
+		if(flags->width > len)
+		{
+			while(printed < (flags->width - len))
+				printed += print_single_character(' ');
+		}
+		flags->width = -1;
+	}
+	return (printed);
+}
+
 int	ft_put_nbr_len(int n, fs_flags *flags)
 {
 	int printed;
 
 	// printf("\n\t put nbr len : %d", n);
 	printed = 0;
+
+	printed += print_based_on_flag(flags, n);
 	if (n == -2147483648)
 	{
 		ft_putchar_fd('-', 1);
@@ -111,13 +161,8 @@ int	ft_put_nbr_len(int n, fs_flags *flags)
 		ft_putchar_fd('-', 1);
 		n *= -1;
 		printed++;
-		flags->plus = 0;
 	}
-	if(flags->plus == 1)
-	{
-		printed += print_single_character('+');
-		flags->plus = 0;
-	}
+	
 	if (n >= 10)
 		printed += ft_put_nbr_len(n / 10, flags);
 	

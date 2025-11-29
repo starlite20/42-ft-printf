@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:18:21 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/29 15:29:34 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/29 19:07:12 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_flags
 	int zero;
 	int minus;
 	int width;
+	int precision;
 }	fs_flags;
 
 int print_argument(char *str, int *printed, va_list args);
@@ -52,5 +53,6 @@ int	ft_put_nbr_len(int n, fs_flags *flags);
 int	ft_put_unbr_len(unsigned int n);
 void	ft_put_hexnbr_len(unsigned int to_print, char hex_format, int *printed);
 
+int num_len(long long num);
 
 #endif
