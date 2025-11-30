@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:17:36 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/30 01:47:06 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/30 19:17:53 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int is_format_flag(char character)
 void initiate_flags(fs_flags *flags)
 {
 	flags->plus = 0;
-	flags->minus = 0;
+	flags->left_align = 0;
 	flags->hashtag = 0;
 	flags->dot = 0;
 	flags->zero = 0;
@@ -46,7 +46,7 @@ void initiate_flags(fs_flags *flags)
 
 void flag_printer(fs_flags *flags)
 {
-	printf("\n\n\t|| +%d  -%d     space %d = w %d    . %d = prec %d     # %d    0 %d  ||\n\n", flags->plus, flags->minus, flags->space, flags->width, flags->dot, flags->precision, flags->hashtag, flags->zero);
+	printf("\n\n\t|| +%d  -%d     space %d = w %d    . %d = prec %d     # %d    0 %d  ||\n\n", flags->plus, flags->left_align, flags->space, flags->width, flags->dot, flags->precision, flags->hashtag, flags->zero);
 }
 
 
@@ -63,7 +63,7 @@ int process_flag(char character, fs_flags *flags)
 			flags->zero = 1;
 		else if(character == '-')
 		{
-			flags->minus = 1;
+			flags->left_align = 1;
 			flags->zero = 0;
 		}
 		else if(character == '#')
@@ -74,7 +74,11 @@ int process_flag(char character, fs_flags *flags)
 			flags->zero = 0;
 		}
 		else if(character == ' ')
-			flags->space = 1;
+		{
+			if(flags->plus == 0)
+				flags->space = 1;
+		}
+			
 
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:18:21 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/30 01:36:15 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/30 18:21:50 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_flags
 	int space;
 	int dot;
 	int zero;
-	int minus;
+	int left_align;
 	int width;
 	int precision;
 }	fs_flags;

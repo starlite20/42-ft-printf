@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 01:11:02 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/30 02:59:12 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/11/30 20:42:27 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,12 @@ int print_number(int to_print, fs_flags *flags)
 	// printf("\n\t=> print number");
 	int printed;
 	printed = ft_put_nbr_len(to_print, flags);
-	if((flags->minus == 1) || (flags->plus== 1))
+	if((flags->left_align == 1) )//|| (flags->plus== 1))
 	{
-		if(flags->minus == 1)
-			flags->minus = 2;
-		if(flags->plus== 1)
-			flags->plus= 2;
+		if(flags->left_align == 1)
+			flags->left_align = 2;
+		// if(flags->plus== 1)
+		// 	flags->plus= 2;
 		printed += print_num_based_on_flag(flags, to_print);
 	}
 	return (printed);
@@ -158,68 +158,89 @@ int print_num_based_on_flag(fs_flags *flags, int num)
 
 	len = num_len(num);
 
-	if(((flags->plus == 1) && (flags->minus == 0))|| ((flags->plus == 2) && (flags->minus == 1)))
+	if(flags->width > 0)
+	{
+		if(num >= 0)
+		{
+			if((flags->plus == 1) || (flags->plus == -1) || (flags->space != 0))
+				len += 1;
+		}
+		if((flags->left_align == 0) || (flags->left_align == 2))
+		{
+			//printf("\n\n\t\t=> spaces to print %d for num %d \n\n", len, num);
+
+			if(flags->width > len)
+			{
+				while(printed < (flags->width - len))
+					printed += print_single_character(' ');
+					//printed += print_single_character('0' + printed);
+			}
+			flags->width = -1;
+			
+			if(flags->left_align == 2)
+				flags->left_align= -1;
+		}
+	}
+	if(((flags->plus == 1) && (flags->left_align == 0)) || ((flags->plus == 2) && (flags->left_align == 1)))
 	{
 		if(num >= 0)
 		{
 			printed += print_single_character('+');
-			len += 1;
 		}
 		flags->plus = -1;
 	}
 	else if(flags->space == 1)
 	{
+		//printf("\n\n\t ==> this is from + && -  %d \n\n", len);
+
 		if(num >= 0)
 		{
 			printed += print_single_character(' ');
-			len += 1;
 		}
 		flags->space = -1;
 	}
-	else if(flags->width > 0)
+	
+
+	if ((flags->plus == 1) && (flags->left_align == 1))
 	{
-		if((flags->minus == 0) || (flags->minus == 2))
+		//printf("\n\n\t ==> this is from + && -  %d \n\n", len);
+		if(num >= 0)
 		{
-			if(flags->width > len)
-			{
-				while(printed < (flags->width - (len)))
-					printed += print_single_character(' ');
-			}
-			flags->width = -1;
-			
-			if(flags->minus == 2)
-				flags->minus= -1;
+			printed += print_single_character('+');
 		}
+		flags->plus = -1;
 	}
+
+
 	return (printed);
 }
 
-int	ft_put_nbr_len(int n, fs_flags *flags)
+int	ft_put_nbr_len(int num, fs_flags *flags)
 {
 	int printed;
 
 	// printf("\n\t put nbr len : %d", n);
 	printed = 0;
 
-	printed += print_num_based_on_flag(flags, n);
-	if (n == -2147483648)
+	printed += print_num_based_on_flag(flags, num);
+	if (num == -2147483648)
 	{
 		ft_putchar_fd('-', 1);
 		ft_putchar_fd('2', 1);
 		printed += 2;
-		n = 147483648;
+		num = 147483648;
 	}
-	if (n < 0)
+	if (num < 0)
 	{
 		ft_putchar_fd('-', 1);
-		n *= -1;
+		num *= -1;
 		printed++;
 	}
 	
-	if (n >= 10)
-		printed += ft_put_nbr_len(n / 10, flags);
+	if (num >= 10)
+		printed += ft_put_nbr_len(num / 10, flags);
 	
-	ft_putchar_fd(('0' + (n % 10)), 1);
+	ft_putchar_fd(('0' + (num % 10)), 1);
 	printed++;
 	
 	return (printed);

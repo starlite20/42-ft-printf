@@ -86,22 +86,24 @@ int main()
 
 */
 	// Test 8: [%10d]-123[      -123]
-    ft_printf("[%%+10d] Expected: [      +123] | Actual: ");
+    ft_printf("[%%+10d] Expected: [      +123] | Actual:\t\t");
     ret = ft_printf("[%+10d]", 123);
     printf(" (Count: %d)\n\n", ret);
 
 
+    nnum = 123;
 	// Test 8: [%10d]-123[      -123]
-    ft_printf("[%%+-10d] Expected: [      -123] | Actual: ");
-    ret = ft_printf("[%+-10d]", 123);
-    printf(" (Count: %d)\n\n", ret);
+    printf("\n\texpected \t\t=> ");
+    ofp = printf("[% -+10d]\n", nnum);
+    ft_printf("\n\tactual \t\t\t=> ");
+    mfp = ft_printf("[% -+10d]\n", nnum);
+    printf(" (Count +3: O %d   M %d)\n\n", ofp, mfp);
 
 
 	// Test 8: [%10d]-123[      -123]
     // printf("\n[%%-10d] Expected:\t\t[%+-10d] \n", 123);
     // ret = ft_printf("\n\n =>\t\t\t\t[%+-10d] \n", 123);
     // printf(" (Count: %d)\n\n", ret);
-
 
 /*
     // Test 9: [%10s]"hi"[        hi] (Test width padding with spaces)
