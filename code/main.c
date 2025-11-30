@@ -4,8 +4,10 @@ int main()
 {
 	
 	int mfp, ofp;
-	unsigned int num = 123456789;
-	int nnum = -123456789;
+	// unsigned int num = 123456789;
+	// int nnum = -123456789;
+
+
 
 	// printf("\n\n\n### MY VERSION\n");
 	// mfp = ft_printf(" => [%d] [%d] [%%] [%d] [%c] [%s] \nu:[%u] \t p:[%p]\t p:[%p] \t x:[%x] \t X:[%X] ", 100,  5, -545132323, 'a', "hellow", UINT_MAX, &mfp, NULL, num, num);
@@ -297,7 +299,7 @@ int main()
 
 
 
-
+    /*
     //unsigned
     unsigned int num_small = 12345U; // 5 characters
     unsigned int num_large = UINT_MAX; // 10 characters
@@ -376,4 +378,82 @@ int main()
     printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
 
     printf("----------------------------------------------------------\n");
+    */
+
+
+    // hex 
+    /*
+    printf("\tExpected Output for \t[%%#x]\n");
+    ofp = printf("\tOriginal printf:\t[%#x]\n", 123);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%#x]\n", 123);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    */
+
+
+    
+    unsigned int hex_val = 255; // FF
+    unsigned int zero_val = 0;
+    unsigned int large_val = 65535; // FFFF
+    // --- Basic Width Test (%x) ---
+    printf("// Test 1.1: Basic Width (Right-align)\n");
+    printf("\tExpected Output:\t[   %x]\n", hex_val); // 3 spaces + FF
+    ofp = printf("\tOriginal printf:\t[%%6x] -> [%6x]\n", hex_val);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%6x] -> [%6x]\n", hex_val);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // --- Left-Align Test (%X) ---
+    printf("// Test 1.2: Left-Align ('-') with Width\n");
+    printf("\tExpected Output:\t[%X  ]\n", large_val); // FFFF + 2 spaces
+    ofp = printf("\tOriginal printf:\t[%%-6X] -> [%-6X]\n", large_val);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%-6X] -> [%-6X]\n", large_val);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // --- Alternate Form Test ('#') for %x ---
+    printf("// Test 2.1: Alternate Form ('#')\n");
+    printf("\tExpected Output:\t[0x%x]\n", hex_val); // 0xff
+    ofp = printf("\tOriginal printf:\t[%%#x] -> [%#x]\n", hex_val);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%#x] -> [%#x]\n", hex_val);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // --- Alternate Form Test ('#') for %X ---
+    printf("// Test 2.2: Alternate Form ('#') for uppercase\n");
+    printf("\tExpected Output:\t[0X%X]\n", hex_val); // 0XFF
+    ofp = printf("\tOriginal printf:\t[%%#X] -> [%#X]\n", hex_val);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%#X] -> [%#X]\n", hex_val);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // --- Combined Flags: Width + Hash (%x) ---
+    printf("// Test 3.1: Width and '#' combined (Right-align)\n");
+    printf("\tExpected Output:\t[ 0x%x]\n", hex_val); // 1 space + 0xff
+    ofp = printf("\tOriginal printf:\t[%%6#x] -> [%6#x]\n", hex_val);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%6#x] -> [%6#x]\n", hex_val);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // --- Combined Flags: Left-Align + Width + Hash (%X) ---
+    printf("// Test 3.2: Left-Align, Width, and '#' combined\n");
+    printf("\tExpected Output:\t[0X%X ]\n", large_val); // 0XFFFF + 1 space
+    ofp = printf("\tOriginal printf:\t[%%#-7X] -> [%#-7X]\n", large_val);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%#-7X] -> [%#-7X]\n", large_val);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // --- Corner Case: Zero Value with '#' ---
+    printf("// Test 4.1: Zero value with '#'\n");
+    printf("\tExpected Output:\t[%x]\n", zero_val); // Standard printf does *not* print 0x for 0
+    ofp = printf("\tOriginal printf:\t[%%#x] -> [%#x]\n", zero_val);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%#x] -> [%#x]\n", zero_val);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // --- Check for '+' and ' ' being ignored for hex ---
+    printf("// Test 5.1: Ignored '+' flag (Behaves like [%%10x])\n");
+    printf("\tExpected Output:\t[       %x]\n", hex_val);
+    ofp = printf("\tOriginal printf:\t[%%+10x] -> [%+10x]\n", hex_val);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%+10x] -> [%+10x]\n", hex_val);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    printf("// Test 5.2: Ignored ' ' flag (Behaves like [%%10x])\n");
+    printf("\tExpected Output:\t[       %x]\n", hex_val);
+    ofp = printf("\tOriginal printf:\t[%% 10x] -> [% 10x]\n", hex_val);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%% 10x] -> [% 10x]\n", hex_val);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
 }
