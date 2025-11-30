@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:17:36 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/11/30 19:17:53 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/12/01 01:10:35 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,11 +139,11 @@ int print_argument(char *str, int *printed, va_list args)
 			else if((fs_val == 'd') || (fs_val == 'i'))
 				*printed += print_number(va_arg(args, int), flags);
 			else if(fs_val == 'u')
-				*printed += print_unsigned_number(va_arg(args, int));
+				*printed += print_unsigned_number(va_arg(args, int), flags);
 			else if(fs_val == 'p')
 				*printed += print_address(va_arg(args, void *));
 			else if((fs_val == 'x') || (fs_val == 'X'))
-				*printed += print_hexnum(va_arg(args, unsigned int), fs_val);
+				*printed += print_hexnum(va_arg(args, unsigned int), fs_val, flags);
 			else if(fs_val == '%')
 				*printed += print_percentage();
 		}
