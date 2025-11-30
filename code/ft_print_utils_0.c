@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 01:11:02 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/12/01 01:57:43 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/12/01 02:43:10 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,44 +61,6 @@ int print_percentage()
 
 
 
-
-
-
-void print_hexaddress(unsigned long long to_print, int *printed)
-{
-	// printf("\n\t=> print hex addr");
-	if(to_print >= 16)
-	{
-		print_hexaddress(to_print/16, printed);
-		print_hexaddress(to_print%16, printed);
-	}
-	else
-	{
-		if(to_print >= 10)
-			*printed += print_single_character((to_print - 10) + 'a');
-		else
-			*printed += print_single_character(to_print + '0');
-	}
-}
-
-int print_address(void *to_print)
-{
-	// printf("\n\t=> print address");
-	int printed;
-
-	printed = 0;
-
-	if(to_print == NULL)
-	{
-		printed += print_string("0x0");
-	}
-	else
-	{
-		printed += print_string("0x");
-		print_hexaddress(((unsigned long long)to_print), &printed);
-	}
-	return (printed);
-}
 
 
 

@@ -390,7 +390,7 @@ int main()
     */
 
 
-    
+    /*
     unsigned int hex_val = 255; // FF
     unsigned int zero_val = 0;
     unsigned int large_val = 65535; // FFFF
@@ -455,5 +455,42 @@ int main()
     ofp = printf("\tOriginal printf:\t[%% 10x] -> [% 10x]\n", hex_val);
     mfp = ft_printf("\tYour ft_printf:\t\t[%% 10x] -> [% 10x]\n", hex_val);
     printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
-    
+    */
+
+
+    int var = 42;
+    void *ptr_non_null = &var;
+    void *ptr_null = NULL;    // --- Test 1.1: Basic Non-NULL Pointer Address ---
+    printf("// Test 1.1: Basic Non-NULL Pointer Address\n");
+    // Expected output will be '0x' followed by address in lowercase hex
+    ofp = printf("\tOriginal printf:\t[%%p] -> [%p]\n", ptr_non_null);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%p] -> [%p]\n", ptr_non_null);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // --- Test 1.2: NULL Pointer (Crucial Edge Case) ---
+    printf("// Test 1.2: NULL Pointer (Note: Output is implementation-defined: typically 0x0 or (nil))\n");
+    // Run this test with regular printf first to know the exact string you must match!
+    ofp = printf("\tOriginal printf:\t[%%p] -> [%p]\n", ptr_null);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%p] -> [%p]\n", ptr_null);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // --- Test 2.1: Width Flag (Right-Align) ---
+    printf("// Test 2.1: Width Flag (Right-align)\n");
+    // The width should apply to the entire address string, including '0x'.
+    ofp = printf("\tOriginal printf:\t[%%20p] -> [%20p]\n", ptr_non_null);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%20p] -> [%20p]\n", ptr_non_null);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // --- Test 2.2: Left-Align ('-') with Width ---
+    printf("// Test 2.2: Left-Align ('-') with Width\n");
+    ofp = printf("\tOriginal printf:\t[%%-20p] -> [%-20p]\n", ptr_non_null);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%-20p] -> [%-20p]\n", ptr_non_null);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // --- Test 3.1: Ignored Flags ('#', '+', ' ') ---
+    printf("// Test 3.1: Ignored Flags ('#', '+', ' ')\n");
+    // For %%p, all flags except width and '-' should be ignored.
+    ofp = printf("\tOriginal printf:\t[%%#+ 20p] -> [%#+ 20p]\n", ptr_non_null);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%#+ 20p] -> [%#+ 20p]\n", ptr_non_null);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
 }

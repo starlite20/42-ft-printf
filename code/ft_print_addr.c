@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_hex.c                                     :+:      :+:    :+:   */
+/*   ft_print_addr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/01 01:57:29 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/12/01 02:50:43 by ssujaude         ###   ########.fr       */
+/*   Created: 2025/12/01 02:43:12 by ssujaude          #+#    #+#             */
+/*   Updated: 2025/12/01 02:58:59 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "ft_printf.h"
 
 
-int hexnum_len(long long num)
+
+int hexaddr_len(unsigned long long num)
 {
 	int len;
 	
 	len = 0;
 	if(num == 0)
 		return (1);
-	if (num < 0)
-	{
-		len++;
-		num *= -1;
-	}
 	while(num > 0)
 	{
 		num /= 16;
@@ -33,38 +30,40 @@ int hexnum_len(long long num)
 	return (len);
 }
 
-int print_hexnum(unsigned int to_print, char hex_format, fs_flags *flags)
+
+int print_address(void *to_print, fs_flags *flags)
 {
-	// printf("\n\t=> print hex num");
+	// printf("\n\t=> print address");
 	int printed;
 
 	printed = 0;
-	printed = print_hexnum_flags(flags, hex_format, to_print);
+	printed = print_hexaddr_flags(flags, (unsigned long long)to_print);
 
-	ft_put_hexnbr_len(((unsigned int)to_print), hex_format, &printed, flags);
-
+	if(to_print == NULL)
+		printed += print_string("0x0");
+	else
+	{
+		printed += print_string("0x");
+		ft_put_hexaddress(((unsigned long long)to_print), &printed, flags);
+	}
 	if(flags->left_align == 1) 
 	{
 		if(flags->left_align == 1)
 			flags->left_align = 2;
-		printed += print_hexnum_flags(flags, hex_format, to_print);
+		printed += print_hexaddr_flags(flags, (unsigned long long)to_print);
 	}
 	return (printed);
 }
 
-int print_hexnum_flags(fs_flags *flags, char hex_format, unsigned int unum)
+int print_hexaddr_flags(fs_flags *flags, unsigned long long addr)
 {
 	int printed = 0;
 	int len;
 
-	len = hexnum_len(unum);
+	len = hexaddr_len(addr) + 2;
 
 	if(flags->width > 0)
 	{
-		if(flags->space != 0)
-			len += 1;
-		if(flags->hashtag != 0)
-			len += 2;
 		if((flags->left_align == 0) || (flags->left_align == 2))
 		{
 			//printf("\n\n\t\t=> spaces to print %d for num %d \n\n", len, num);
@@ -81,41 +80,23 @@ int print_hexnum_flags(fs_flags *flags, char hex_format, unsigned int unum)
 				flags->left_align= -1;
 		}
 	}
-	if((flags->hashtag == 1) && (unum != 0))
-	{
-		printed += print_single_character('0');
-		printed += print_single_character(hex_format);
-		flags->hashtag = -1;
-	}
-	if(flags->space == 1)
-	{
-		//printf("\n\n\t ==> this is from + && -  %d \n\n", len);
-		printed += print_single_character(' ');
-		flags->space = -1;
-	}
-	
 	return (printed);
 }
 
-void	ft_put_hexnbr_len(unsigned int to_print, char hex_format, int *printed, fs_flags *flags)
+void ft_put_hexaddress(unsigned long long to_print, int *printed, fs_flags *flags)
 {
+	// printf("\n\t=> print hex addr");
 	if(to_print >= 16)
 	{
-		ft_put_hexnbr_len(to_print/16, hex_format, printed, flags);
-		ft_put_hexnbr_len(to_print%16, hex_format, printed, flags);
+		ft_put_hexaddress(to_print/16, printed, flags);
+		ft_put_hexaddress(to_print%16, printed, flags);
 	}
 	else
 	{
 		if(to_print >= 10)
-		{
-			if(hex_format == 'x')
-				*printed += print_single_character((to_print - 10) + 'a');
-			else
-				*printed += print_single_character((to_print - 10) + 'A');
-		}
+			*printed += print_single_character((to_print - 10) + 'a');
 		else
 			*printed += print_single_character(to_print + '0');
 	}
 }
-
 
