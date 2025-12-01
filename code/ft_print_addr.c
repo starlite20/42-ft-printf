@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 02:43:12 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/12/01 02:58:59 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/12/01 15:40:52 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int print_hexaddr_flags(fs_flags *flags, unsigned long long addr)
 {
 	int printed = 0;
 	int len;
+	char printchar;
+
 
 	len = hexaddr_len(addr) + 2;
 
@@ -68,11 +70,14 @@ int print_hexaddr_flags(fs_flags *flags, unsigned long long addr)
 		{
 			//printf("\n\n\t\t=> spaces to print %d for num %d \n\n", len, num);
 
+			if(flags->zero != 1)
+				printchar = ' ';
+			else
+				printchar = '0';
 			if(flags->width > len)
 			{
 				while(printed < (flags->width - len))
-					printed += print_single_character(' ');
-					//printed += print_single_character('0' + printed);
+					printed += print_single_character(printchar);
 			}
 			flags->width = -1;
 			

@@ -457,7 +457,7 @@ int main()
     printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
     */
 
-
+    /*
     int var = 42;
     void *ptr_non_null = &var;
     void *ptr_null = NULL;    // --- Test 1.1: Basic Non-NULL Pointer Address ---
@@ -493,4 +493,272 @@ int main()
     ofp = printf("\tOriginal printf:\t[%%#+ 20p] -> [%#+ 20p]\n", ptr_non_null);
     mfp = ft_printf("\tYour ft_printf:\t\t[%%#+ 20p] -> [%#+ 20p]\n", ptr_non_null);
     printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    */
+
+    // 0 
+    // ofp = printf("\tOriginal printf:\t[% 010d]\n", 123);
+    // mfp = ft_printf("\tYour ft_printf:\t\t[% 010d]\n", 123);
+    // printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+
+
+    int pos = 42;
+    int neg = -42;
+    int zero = 0;
+
+    
+    // Test 1.1: Basic Zero Padding (Positive)
+    // Expected: Padded with '0's, right-aligned, '0's placed after the sign.
+    ofp = printf("\tOriginal printf:\t[%%08d] -> [%08d]\n", pos);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%08d] -> [%08d]\n", pos);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // Test 1.2: Basic Zero Padding (Negative)
+    // Expected: Sign must come first, followed by '0's, then digits.
+    ofp = printf("\tOriginal printf:\t[%%08d] -> [%08d]\n", neg);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%08d] -> [%08d]\n", neg);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // Test 1.3: Basic Zero Padding (Zero Value)
+    ofp = printf("\tOriginal printf:\t[%%05d] -> [%05d]\n", zero);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%05d] -> [%05d]\n", zero);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // Test 1.1: Basic Zero Padding (Positive)
+    // Expected: Padded with '0's, right-aligned, '0's placed after the sign.
+    ofp = printf("\tOriginal printf:\t[%%08d] -> [%08d]\n", pos);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%08d] -> [%08d]\n", pos);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // Test 1.2: Basic Zero Padding (Negative)
+    // Expected: Sign must come first, followed by '0's, then digits.
+    ofp = printf("\tOriginal printf:\t[%%08d] -> [%08d]\n", neg);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%08d] -> [%08d]\n", neg);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // Test 1.3: Basic Zero Padding (Zero Value)
+    ofp = printf("\tOriginal printf:\t[%%05d] -> [%05d]\n", zero);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%05d] -> [%05d]\n", zero);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+
+    // Test 3.1: Conflict with Precision (Positive)
+    // Precedence Rule: Precision ('.') must IGNORE the '0' flag. Width padding reverts to spaces.
+    // Expected: Spaces for width padding, followed by precision-padded '0's.
+    ofp = printf("\tOriginal printf:\t[%%08.5d] -> [%08.5d]\n", pos);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%08.5d] -> [%08.5d]\n", pos);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // Test 3.2: Conflict with Precision (Negative)
+    // Expected: Spaces for width padding, followed by sign, followed by precision-padded '0's.
+    ofp = printf("\tOriginal printf:\t[%%08.5d] -> [%08.5d]\n", neg);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%08.5d] -> [%08.5d]\n", neg);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // Test 3.3: Conflict with Precision (Zero Value)
+    // Edge Case: If precision is 0 and value is 0, nothing is printed for the number.
+    // The '0' flag is still ignored due to precision.
+    ofp = printf("\tOriginal printf:\t[%%05.0d] -> [%05.0d]\n", zero);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%05.0d] -> [%05.0d]\n", zero);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    ofp = printf("\tOriginal printf:\t[%5d]\n", -1);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%5d]\n", -1);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    
+    
+    /*
+    ofp = printf("\tOriginal printf:\t[%%-5d] -> [%-5d]\n", 12);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%-5d] -> [%-5d]\n", 12);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // Test 2: Width Consumption Failure with Plus and Left-Align ('-')
+    // The first call to print_num_flags will prematurely consume the width, resulting in incorrect trailing space.
+    ofp = printf("\tOriginal printf:\t[%%-+6d] -> [%-+6d]\n", 123);
+    mfp = ft_printf("\tYour ft_printf:\t\t[%%-+6d] -> [%-+6d]\n", 123);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    */
+
+
+    /*
+printf("--- TEST 1: 0 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", 0);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", 0);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(2): -1
+    printf("--- TEST 2: -1 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", -1);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", -1);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(3): 1
+    printf("--- TEST 3: 1 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", 1);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", 1);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(4): 9
+    printf("--- TEST 4: 9 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", 9);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", 9);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(5): 10
+    printf("--- TEST 5: 10 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", 10);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", 10);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(6): 11
+    printf("--- TEST 6: 11 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", 11);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", 11);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(7): 15
+    printf("--- TEST 7: 15 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", 15);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", 15);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(8): 16
+    printf("--- TEST 8: 16 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", 16);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", 16);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(9): 17
+    printf("--- TEST 9: 17 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", 17);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", 17);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(10): 99
+    printf("--- TEST 10: 99 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", 99);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", 99);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(11): 100
+    printf("--- TEST 11: 100 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", 100);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", 100);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(12): 101
+    printf("--- TEST 12: 101 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", 101);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", 101);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(13): -9
+    printf("--- TEST 13: -9 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", -9);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", -9);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(14): -10
+    printf("--- TEST 14: -10 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", -10);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", -10);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(15): -11
+    printf("--- TEST 15: -11 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", -11);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", -11);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(16): -14
+    printf("--- TEST 16: -14 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", -14);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", -14);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(17): -15
+    printf("--- TEST 17: -15 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", -15);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", -15);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(18): -16
+    printf("--- TEST 18: -16 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", -16);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", -16);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(19): -99
+    printf("--- TEST 19: -99 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", -99);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", -99);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(20): -100
+    printf("--- TEST 20: -100 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", -100);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", -100);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(21): -101
+    printf("--- TEST 21: -101 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", -101);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", -101);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(22): INT_MAX
+    printf("--- TEST 22: INT_MAX ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", INT_MAX);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", INT_MAX);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(23): INT_MIN
+    printf("--- TEST 23: INT_MIN ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", INT_MIN);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", INT_MIN);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // Tests 24-27 check overflow/truncation behavior when passing large types (long, unsigned) to %d.
+    
+    // TEST(24): LONG_MAX (Casting to long helps ensure the compiler passes a long)
+    printf("--- TEST 24: LONG_MAX (Overflow behavior) ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", (long)LONG_MAX);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", (long)LONG_MAX);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(25): LONG_MIN
+    printf("--- TEST 25: LONG_MIN (Overflow behavior) ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", (long)LONG_MIN);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", (long)LONG_MIN);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(26): UINT_MAX
+    printf("--- TEST 26: UINT_MAX (Overflow behavior) ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", (unsigned int)UINT_MAX);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", (unsigned int)UINT_MAX);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(27): ULONG_MAX
+    printf("--- TEST 27: ULONG_MAX (Overflow behavior) ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", (unsigned long)ULONG_MAX);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", (unsigned long)ULONG_MAX);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);		else
+			printed += 1;
+    
+    // TEST(28): LONG_LONG_MAX constant (using LL suffix)
+    printf("--- TEST 28: LONG_LONG constant (Overflow behavior) ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%d ] -> [ %d ]\n", 9223372036854775807LL);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%d ] -> [ %d ]\n", 9223372036854775807LL);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // TEST(29): Multiple Arguments
+    printf("--- TEST 29: Multiple Arguments ---\n");
+    ofp = printf("\tOriginal printf:\t[ ... ] -> [ %d %d %d %d %d %d %d ]\n", 
+                 INT_MAX, INT_MIN, LONG_MAX, LONG_MIN, ULONG_MAX, 0, -42);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ ... ] -> [ %d %d %d %d %d %d %d ]\n", 
+                    INT_MAX, INT_MIN, LONG_MAX, LONG_MIN, ULONG_MAX, 0, -42);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    */
 }

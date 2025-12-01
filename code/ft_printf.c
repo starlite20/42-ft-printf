@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:17:36 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/12/01 02:57:20 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:11:30 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ int process_flag(char character, fs_flags *flags)
 			flags->space = 0;
 		}
 		else if(character == '0')
-			flags->zero = 1;
+		{
+			if(flags->left_align != 1)
+				flags->zero = 1;
+		}
 		else if(character == '-')
 		{
 			flags->left_align = 1;

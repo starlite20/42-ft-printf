@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 01:57:29 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/12/01 02:50:43 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/12/01 15:39:43 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,17 @@ int print_hexnum_flags(fs_flags *flags, char hex_format, unsigned int unum)
 {
 	int printed = 0;
 	int len;
+	char printchar;
+
 
 	len = hexnum_len(unum);
 
+	if(flags->space == 1)
+	{
+		//printf("\n\n\t ==> this is from + && -  %d \n\n", len);
+		printed += print_single_character(' ');
+		flags->space = -1;
+	}
 	if(flags->width > 0)
 	{
 		if(flags->space != 0)
@@ -68,12 +76,14 @@ int print_hexnum_flags(fs_flags *flags, char hex_format, unsigned int unum)
 		if((flags->left_align == 0) || (flags->left_align == 2))
 		{
 			//printf("\n\n\t\t=> spaces to print %d for num %d \n\n", len, num);
-
+			if(flags->zero != 1)
+				printchar = ' ';
+			else
+				printchar = '0';
 			if(flags->width > len)
 			{
 				while(printed < (flags->width - len))
-					printed += print_single_character(' ');
-					//printed += print_single_character('0' + printed);
+					printed += print_single_character(printchar);
 			}
 			flags->width = -1;
 			
@@ -87,12 +97,7 @@ int print_hexnum_flags(fs_flags *flags, char hex_format, unsigned int unum)
 		printed += print_single_character(hex_format);
 		flags->hashtag = -1;
 	}
-	if(flags->space == 1)
-	{
-		//printf("\n\n\t ==> this is from + && -  %d \n\n", len);
-		printed += print_single_character(' ');
-		flags->space = -1;
-	}
+	
 	
 	return (printed);
 }
