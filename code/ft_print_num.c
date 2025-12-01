@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 01:55:59 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/12/01 15:32:30 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/12/01 22:10:47 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ int num_len(long long num)
 		len++;
 	}
 	return (len);
+}
+
+void flag_printer(fs_flags *flags)
+{
+	printf("\n\n\t|| +%d  -%d     space %d = w %d    . %d = prec %d     # %d    0 %d  ||\n\n", flags->plus, flags->left_align, flags->space, flags->width, flags->dot, flags->precision, flags->hashtag, flags->zero);
 }
 
 
@@ -79,23 +84,31 @@ int print_num_flags(fs_flags *flags, long long num)
 	}
 	if((num < 0) && (flags->zero == 1))
 		print_single_character('-');
-	if(flags->width > 0)
+	if((flags->width > 0) || (flags->precision > 0))
 	{
 		if((flags->left_align == 0) || (flags->left_align == 2))
 		{
 			//printf("\n\n\t\t=> spaces to print %d for num %d \n\n", len, num);
-			if(flags->zero != 1)
-				printchar = ' ';
-			else
+			if(((flags->zero == 1) && (flags->dot == 0)) || ((flags->zero == 0) && (flags->dot == 1)))
 				printchar = '0';
+			else
+				printchar = ' ';
 
 			if(flags->width > len)
 			{
 				while(printed < (flags->width - len))
 					printed += print_single_character(printchar);
 					//printed += print_single_character('0' + printed);
+				flags->width = -1;
 			}
-			flags->width = -1;
+			
+			if(flags->precision > len)
+			{
+				while(printed < (flags->precision - len))
+					printed += print_single_character(printchar);
+					//printed += print_single_character('0' + printed);
+				flags->precision = -1;
+			}
 
 			if(flags->left_align == 2)
 				flags->left_align= -1;
@@ -141,8 +154,11 @@ int	ft_put_nbr_len(long long num, fs_flags *flags)
 	if (num >= 10)
 		printed += ft_put_nbr_len(num / 10, flags);
 	
-	ft_putchar_fd(('0' + (num % 10)), 1);
-	printed++;
+	if(!((flags->dot == 1) && (flags->precision == 0) && (num == 0)))
+	{
+		ft_putchar_fd(('0' + (num % 10)), 1);
+		printed++;
+	}
 	
 	return (printed);
 }

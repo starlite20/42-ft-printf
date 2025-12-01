@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:17:36 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/12/01 20:56:50 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/12/01 21:54:27 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,6 @@ void initiate_flags(fs_flags *flags)
 
 
 
-void flag_printer(fs_flags *flags)
-{
-	printf("\n\n\t|| +%d  -%d     space %d = w %d    . %d = prec %d     # %d    0 %d  ||\n\n", flags->plus, flags->left_align, flags->space, flags->width, flags->dot, flags->precision, flags->hashtag, flags->zero);
-}
 
 
 int process_flag(char character, fs_flags *flags)
