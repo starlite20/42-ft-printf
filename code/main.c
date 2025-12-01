@@ -5,51 +5,34 @@ int main()
 	
 	int mfp, ofp;
 
-    char ch_A = 'A';
-    char ch_B = 'B';
+    const char *str = "Hello";
 
 
-	printf("\n*** %%c FORMAT SPECIFIER TESTS ***\n\n");
-
-    // TC-01: Default (Right-Justify with Space Padding)
-    printf("--- TEST 01: '%%5c', 'A' ---\n");
-    // Expected output: |    A| (5 characters total)
-    ofp = printf("\tOriginal printf:\t[ %%5c ] -> [ %5c ]\n", ch_A);
-    mfp = ft_printf("\tYour ft_printf:\t\t[ %%5c ] -> [ %5c ]\n", ch_A);
+   // TC-07: Default (Right-Justify) - Base Case
+    printf("--- TEST 07: '%%10s', \"Hello\" ---\n");
+    // Expected output: |     Hello| (10 chars total)
+    ofp = printf("\tOriginal printf:\t[ %%10s ] -> [ %10s ]\n", str);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%10s ] -> [ %10s ]\n", str);
     printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
 
-    // TC-02: Left-Justify Flag (-)
-    printf("--- TEST 02: '%%-5c', 'A' ---\n");
-    // Expected output: |A    | (5 characters total)
-    ofp = printf("\tOriginal printf:\t[ %%-5c ] -> [ %-5c ]\n", ch_A);
-    mfp = ft_printf("\tYour ft_printf:\t\t[ %%-5c ] -> [ %-5c ]\n", ch_A);
+    // TC-08: Left-Justify Flag (-)
+    printf("--- TEST 08: '%%-10s', \"Hello\" ---\n");
+    // Expected output: |Hello     | (10 chars total)
+    ofp = printf("\tOriginal printf:\t[ %%-10s ] -> [ %-10s ]\n", str);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%-10s ] -> [ %-10s ]\n", str);
     printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
 
-    // TC-03: Zero Padding Flag (0)
-    printf("--- TEST 03: '%%05c', 'A' ---\n");
-    // Expected output: |0000A| (5 characters total)
-    ofp = printf("\tOriginal printf:\t[ %%05c ] -> [ %05c ]\n", ch_A);
-    mfp = ft_printf("\tYour ft_printf:\t\t[ %%05c ] -> [ %05c ]\n", ch_A);
-    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
-
-    // TC-04: No Width (No Padding)
-    printf("--- TEST 04: '%%c', 'A' ---\n");
-    // Expected output: |A| (1 character total)
-    ofp = printf("\tOriginal printf:\t[ %%c ] -> [ %c ]\n", ch_A);
-    mfp = ft_printf("\tYour ft_printf:\t\t[ %%c ] -> [ %c ]\n", ch_A);
+    // TC-09: Space Flag ( ) - Ignored with no '-'
+    printf("--- TEST 09: '%% 10s', \"Hello\" ---\n");
+    // Expected output: |     Hello| (10 chars total - same as TC-07)
+    ofp = printf("\tOriginal printf:\t[ %% 10s ] -> [ % 10s ]\n", str);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %% 10s ] -> [ % 10s ]\n", str);
     printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
     
-    // TC-05: Flag (-) without width (Ignored)
-    printf("--- TEST 05: '%%-c', 'B' ---\n");
-    // Expected output: |B| (1 character total)
-    ofp = printf("\tOriginal printf:\t[ %%-c ] -> [ %-c ]\n", ch_B);
-    mfp = ft_printf("\tYour ft_printf:\t\t[ %%-c ] -> [ %-c ]\n", ch_B);
-    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
-
-    // TC-06: Flag (0) without width (Ignored)
-    printf("--- TEST 06: '%%0c', 'B' ---\n");
-    // Expected output: |B| (1 character total)
-    ofp = printf("\tOriginal printf:\t[ %%0c ] -> [ %0c ]\n", ch_B);
-    mfp = ft_printf("\tYour ft_printf:\t\t[ %%0c ] -> [ %0c ]\n", ch_B);
+    // TC-10: Space Flag ( ) with Left-Justify Flag (-)
+    printf("--- TEST 10: '%% -10s', \"Hello\" ---\n");
+    // Expected output: |Hello     | (10 chars total - same as TC-08)
+    ofp = printf("\tOriginal printf:\t[ %% -10s ] -> [ % -10s ]\n", str);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %% -10s ] -> [ % -10s ]\n", str);
     printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
 }

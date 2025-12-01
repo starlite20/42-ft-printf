@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:17:36 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/12/01 17:16:09 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/12/01 20:56:50 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int print_argument(char *str, int *printed, va_list args)
 			if(fs_val == 'c')
 				*printed += print_character(va_arg(args, int), flags);
 			else if(fs_val == 's')
-				*printed += print_string(va_arg(args, char *));
+				*printed += print_string(va_arg(args, char *), flags);
 			else if((fs_val == 'd') || (fs_val == 'i'))
 				*printed += print_number(va_arg(args, int), flags);
 			else if(fs_val == 'u')
