@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:18:21 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/12/01 15:43:43 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/12/01 17:28:14 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void initiate_flags(fs_flags *flags);
 int is_format_flag(char character);
 int is_format_specifier(char character);
 
-int print_single_character(char to_print);
 int print_string(char *to_print);
 int print_percentage();
 int print_hexnum(unsigned int to_print, char hex_format, fs_flags *flags);
@@ -51,6 +50,10 @@ void	ft_put_hexnbr_len(unsigned int to_print, char hex_format, int *printed, fs_
 int num_len(long long num);
 int print_hexnum_flags(fs_flags *flags, char hex_format, unsigned int unum);
 
+
+int print_single_character(char to_print);
+int print_character(char to_print, fs_flags *flags);
+int print_char_flags(fs_flags *flags);
 
 
 int print_number(int to_print, fs_flags *flags);

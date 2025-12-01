@@ -6,7 +6,7 @@
 #    By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/19 19:14:16 by ssujaude          #+#    #+#              #
-#    Updated: 2025/12/01 16:37:58 by ssujaude         ###   ########.fr        #
+#    Updated: 2025/12/01 16:59:15 by ssujaude         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ RM = rm -f
 AR = ar rcs
 
 SRCS = \
-	ft_printf.c ft_print_utils_0.c ft_print_num.c ft_print_hex.c ft_print_unum.c ft_print_addr.c\
+	ft_printf.c ft_print_num.c ft_print_hex.c ft_print_unum.c ft_print_addr.c ft_print_chars.c\
 
 LIBFT_PATH = libft
 LIBFT = ${LIBFT_PATH}/libft.a
