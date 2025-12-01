@@ -6,7 +6,7 @@
 #    By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/19 19:14:16 by ssujaude          #+#    #+#              #
-#    Updated: 2025/12/01 02:56:08 by ssujaude         ###   ########.fr        #
+#    Updated: 2025/12/01 16:37:58 by ssujaude         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ bonus: $(NAME)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	${MAKE} ${LIBFT_PATH} all
+	${MAKE} ${LIBFT_PATH} bonus
 	cp ${LIBFT} $(NAME)
 	$(AR) $(NAME) $(OBJS)
 

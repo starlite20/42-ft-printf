@@ -502,6 +502,8 @@ int main()
 
 
 
+
+    /*
     int pos = 42;
     int neg = -42;
     int zero = 0;
@@ -761,4 +763,137 @@ printf("--- TEST 1: 0 ---\n");
     printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
     
     */
+
+
+    // TEST(57): 0, width 1
+    printf("--- TEST 57: '%%01u', 0 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%01u ] -> [ %01u ]\n", 0);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%01u ] -> [ %01u ]\n", 0);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(58): -1 (will wrap to UINT_MAX on many systems), width 2
+    printf("--- TEST 58: '%%02u', -1 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%02u ] -> [ %02u ]\n", -1);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%02u ] -> [ %02u ]\n", -1);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(59): 1, width 3
+    printf("--- TEST 59: '%%03u', 1 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%03u ] -> [ %03u ]\n", 1);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%03u ] -> [ %03u ]\n", 1);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(60): 9, width 4
+    printf("--- TEST 60: '%%04u', 9 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%04u ] -> [ %04u ]\n", 9);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%04u ] -> [ %04u ]\n", 9);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(61): 10, width 1
+    printf("--- TEST 61: '%%01u', 10 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%01u ] -> [ %01u ]\n", 10);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%01u ] -> [ %01u ]\n", 10);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(62): 11, width 2
+    printf("--- TEST 62: '%%02u', 11 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%02u ] -> [ %02u ]\n", 11);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%02u ] -> [ %02u ]\n", 11);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(63): 15, width 3
+    printf("--- TEST 63: '%%03u', 15 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%03u ] -> [ %03u ]\n", 15);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%03u ] -> [ %03u ]\n", 15);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(64): 16, width 4
+    printf("--- TEST 64: '%%04u', 16 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%04u ] -> [ %04u ]\n", 16);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%04u ] -> [ %04u ]\n", 16);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(65): 17, width 5
+    printf("--- TEST 65: '%%05u', 17 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%05u ] -> [ %05u ]\n", 17);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%05u ] -> [ %05u ]\n", 17);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(66): 99, width 1
+    printf("--- TEST 66: '%%01u', 99 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%01u ] -> [ %01u ]\n", 99);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%01u ] -> [ %01u ]\n", 99);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(67): 100, width 2
+    printf("--- TEST 67: '%%02u', 100 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%02u ] -> [ %02u ]\n", 100);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%02u ] -> [ %02u ]\n", 100);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(68): 101, width 3
+    printf("--- TEST 68: '%%03u', 101 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%03u ] -> [ %03u ]\n", 101);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%03u ] -> [ %03u ]\n", 101);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // Tests 69-77: Negative numbers that wrap to large unsigned values
+    
+    // TEST(69): -9, width 1
+    printf("--- TEST 69: '%%01u', -9 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%01u ] -> [ %01u ]\n", -9);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%01u ] -> [ %01u ]\n", -9);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(70): -10, width 2
+    printf("--- TEST 70: '%%02u', -10 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%02u ] -> [ %02u ]\n", -10);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%02u ] -> [ %02u ]\n", -10);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // TEST(77): -101, width 3
+    printf("--- TEST 77: '%%03u', -101 ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%03u ] -> [ %03u ]\n", -101);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%03u ] -> [ %03u ]\n", -101);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // Tests 78-84: Limit values and large arguments
+    
+    // TEST(78): INT_MAX, width 9
+    printf("--- TEST 78: '%%09u', INT_MAX ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%09u ] -> [ %09u ]\n", INT_MAX);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%09u ] -> [ %09u ]\n", INT_MAX);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(79): INT_MIN (will wrap to a large unsigned value), width 10
+    printf("--- TEST 79: '%%010u', INT_MIN ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%010u ] -> [ %010u ]\n", INT_MIN);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%010u ] -> [ %010u ]\n", INT_MIN);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // TEST(82): UINT_MAX, width 13
+    printf("--- TEST 82: '%%013u', UINT_MAX ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%013u ] -> [ %013u ]\n", UINT_MAX);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%013u ] -> [ %013u ]\n", UINT_MAX);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(83): ULONG_MAX (usually printed as long long or truncated), width 14
+    printf("--- TEST 83: '%%014u', ULONG_MAX ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%014u ] -> [ %014u ]\n", ULONG_MAX);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%014u ] -> [ %014u ]\n", ULONG_MAX);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+    
+    // TEST(84): LONG_LONG_MAX constant (will print based on truncation behavior), width 15
+    printf("--- TEST 84: '%%015u', 9223372036854775807LL ---\n");
+    ofp = printf("\tOriginal printf:\t[ %%015u ] -> [ %015u ]\n", 9223372036854775807LL);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ %%015u ] -> [ %015u ]\n", 9223372036854775807LL);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
+
+    // TEST(85): Multiple Arguments
+    printf("--- TEST 85: Multiple Arguments (Mixed padding and width) ---\n");
+    ofp = printf("\tOriginal printf:\t[ ... ] -> [ %09u %010u %011u %012u %013u %014u %015u ]\n", 
+                 INT_MAX, INT_MIN, LONG_MAX, LONG_MIN, ULONG_MAX, 0, -42);
+    mfp = ft_printf("\tYour ft_printf:\t\t[ ... ] -> [ %09u %010u %011u %012u %013u %014u %015u ]\n", 
+                    INT_MAX, INT_MIN, LONG_MAX, LONG_MIN, ULONG_MAX, 0, -42);
+    printf("\tCount: (O %d | M %d)\n\n", ofp, mfp);
 }

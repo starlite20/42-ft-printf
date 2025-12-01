@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 01:56:52 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/12/01 15:32:42 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/12/01 16:48:49 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int print_unsigned_number(unsigned int to_print, fs_flags *flags)
 	flags->plus = 0;
 	printed = 0;
 	printed += print_unum_flags(flags, to_print);
-	printed = ft_put_unbr_len(to_print, flags);
+	printed += ft_put_unbr_len(to_print, flags);
 	if(flags->left_align == 1) 
 	{
 		if(flags->left_align == 1)

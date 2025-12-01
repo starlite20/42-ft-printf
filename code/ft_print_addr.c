@@ -6,7 +6,7 @@
 /*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 02:43:12 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/12/01 15:40:52 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/12/01 16:49:21 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int print_address(void *to_print, fs_flags *flags)
 	int printed;
 
 	printed = 0;
-	printed = print_hexaddr_flags(flags, (unsigned long long)to_print);
+	printed += print_hexaddr_flags(flags, (unsigned long long)to_print);
 
 	if(to_print == NULL)
 		printed += print_string("0x0");
