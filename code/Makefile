@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+         #
+#    By: ssujaude <ssujaude@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/19 19:14:16 by ssujaude          #+#    #+#              #
-#    Updated: 2025/12/01 20:49:28 by ssujaude         ###   ########.fr        #
+#    Updated: 2025/12/02 12:52:29 by ssujaude         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,21 +15,19 @@ CFLAGS = -Wall -Wextra -Werror
 
 NAME = libftprintf.a
 
-
 MAKE = make -C
 RM = rm -f
 
 AR = ar rcs
 
 SRCS = \
-	ft_printf.c ft_print_num.c ft_print_hex.c ft_print_unum.c ft_print_addr.c ft_print_chars.c ft_print_strs.c\
+	ft_printf.c ft_flag_mgr.c ft_print_num.c ft_print_num_utils.c \
+	ft_print_hex.c ft_print_unum.c ft_print_addr.c ft_print_chars.c ft_print_strs.c \
 
 LIBFT_PATH = libft
 LIBFT = ${LIBFT_PATH}/libft.a
 
 OBJS = ${SRCS:.c=.o} 
-
-
 
 all: $(NAME)
 

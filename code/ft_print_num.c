@@ -3,162 +3,113 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_num.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
+/*   By: ssujaude <ssujaude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 01:55:59 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/12/01 22:10:47 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/12/02 11:28:01 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "ft_printf.h"
 
-
-int num_len(long long num)
+static void	print_num_flags_support_print(t_flags *flags, int *printed,
+		int *len, char printchar)
 {
-	int len;
-	
-	len = 0;
-	if(num == 0)
-		return (1);
-	if (num < 0)
+	if (flags->width > *len)
 	{
-		len++;
-		num *= -1;
+		while (*printed < (flags->width - *len))
+			*printed += print_single_character(printchar);
+		flags->width = -1;
 	}
-	while(num > 0)
+	if (flags->precision > *len)
 	{
-		num /= 10;
-		len++;
+		while (*printed < (flags->precision - *len))
+			*printed += print_single_character(printchar);
+		flags->precision = -1;
 	}
-	return (len);
+	if (flags->left_align == 2)
+		flags->left_align = -1;
 }
 
-void flag_printer(fs_flags *flags)
+static void	print_num_flags_support_one(t_flags *flags, int *printed, int *len)
 {
-	printf("\n\n\t|| +%d  -%d     space %d = w %d    . %d = prec %d     # %d    0 %d  ||\n\n", flags->plus, flags->left_align, flags->space, flags->width, flags->dot, flags->precision, flags->hashtag, flags->zero);
-}
+	char	printchar;
 
-
-
-//For d and i
-
-int print_number(int to_print, fs_flags *flags)
-{
-	// printf("\n\t=> print number");
-	int printed;
-
-	printed = 0;
-	printed += print_num_flags(flags, to_print);
-	printed += ft_put_nbr_len(to_print, flags);
-	if((flags->left_align == 1) )//|| (flags->plus== 1))
+	if ((flags->width > 0) || (flags->precision > 0))
 	{
-		if(flags->left_align == 1)
-			flags->left_align = 2;
-		// if(flags->plus== 1)
-		// 	flags->plus= 2;
-		printed += print_num_flags(flags, to_print);
-	}
-	return (printed);
-}
-
-int print_num_flags(fs_flags *flags, long long num)
-{
-	int printed = 0;
-	int len;
-	char printchar;
-
-	len = num_len(num);
-	if(num >= 0)
-	{
-		if((flags->plus == 1) || (flags->plus == -1))
-			len += 1;
-	}
-
-	if(flags->space == 1)
-	{
-		//printf("\n\n\t ==> this is from + && -  %d \n\n", len);
-		if(num >= 0)
-			printed += print_single_character(' ');
-		flags->space = -1;
-	}
-	if((num < 0) && (flags->zero == 1))
-		print_single_character('-');
-	if((flags->width > 0) || (flags->precision > 0))
-	{
-		if((flags->left_align == 0) || (flags->left_align == 2))
+		if ((flags->left_align == 0) || (flags->left_align == 2))
 		{
-			//printf("\n\n\t\t=> spaces to print %d for num %d \n\n", len, num);
-			if(((flags->zero == 1) && (flags->dot == 0)) || ((flags->zero == 0) && (flags->dot == 1)))
+			if (((flags->zero == 1) && (flags->dot == 0)) || ((flags->zero == 0)
+					&& (flags->dot == 1)))
 				printchar = '0';
 			else
 				printchar = ' ';
-
-			if(flags->width > len)
-			{
-				while(printed < (flags->width - len))
-					printed += print_single_character(printchar);
-					//printed += print_single_character('0' + printed);
-				flags->width = -1;
-			}
-			
-			if(flags->precision > len)
-			{
-				while(printed < (flags->precision - len))
-					printed += print_single_character(printchar);
-					//printed += print_single_character('0' + printed);
-				flags->precision = -1;
-			}
-
-			if(flags->left_align == 2)
-				flags->left_align= -1;
+			print_num_flags_support_print(flags, printed, len, printchar);
 		}
 	}
+}
 
-	if(((flags->plus == 1) && (flags->left_align == 0)) || ((flags->plus == 2) && (flags->left_align == 1)))
+static void	print_num_flags_support_two(int num, t_flags *flags, int *printed)
+{
+	if (((flags->plus == 1) && (flags->left_align == 0)) || ((flags->plus == 2)
+			&& (flags->left_align == 1)))
 	{
-		if(num >= 0)
-		{
-			printed += print_single_character('+');
-		}
+		if (num >= 0)
+			*printed += print_single_character('+');
 		flags->plus = -1;
 	}
 	if ((flags->plus == 1) && (flags->left_align == 1))
 	{
-		//printf("\n\n\t ==> this is from + && -  %d \n\n", len);
-		if(num >= 0)
-		{
-			printed += print_single_character('+');
-		}
+		if (num >= 0)
+			*printed += print_single_character('+');
 		flags->plus = -1;
 	}
+}
 
+int	print_num_flags(t_flags *flags, long long num)
+{
+	int	printed;
+	int	len;
+
+	printed = 0;
+	len = num_len(num);
+	if (num >= 0)
+	{
+		if ((flags->plus == 1) || (flags->plus == -1))
+			len += 1;
+	}
+	if (flags->space == 1)
+	{
+		if (num >= 0)
+			printed += print_single_character(' ');
+		flags->space = -1;
+	}
+	if ((num < 0) && (flags->zero == 1))
+		print_single_character('-');
+	print_num_flags_support_one(flags, &printed, &len);
+	print_num_flags_support_two(num, flags, &printed);
 	return (printed);
 }
 
-int	ft_put_nbr_len(long long num, fs_flags *flags)
+int	ft_put_nbr_len(long long num, t_flags *flags)
 {
-	int printed;
+	int	printed;
 
-	// printf("\n\t put nbr len : %d", n);
 	printed = 0;
 	if (num < 0)
 	{
-		if(flags->zero == 0)
+		if (flags->zero == 0)
 			printed += print_single_character('-');
 		else
 			printed += 1;
 		num *= -1;
 	}
-	
 	if (num >= 10)
 		printed += ft_put_nbr_len(num / 10, flags);
-	
-	if(!((flags->dot == 1) && (flags->precision == 0) && (num == 0)))
+	if (!((flags->dot == 1) && (flags->precision == 0) && (num == 0)))
 	{
 		ft_putchar_fd(('0' + (num % 10)), 1);
 		printed++;
 	}
-	
 	return (printed);
 }

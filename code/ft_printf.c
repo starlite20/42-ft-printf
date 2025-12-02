@@ -3,202 +3,111 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssujaude <ssujaude@student.42>             +#+  +:+       +#+        */
+/*   By: ssujaude <ssujaude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 19:17:36 by ssujaude          #+#    #+#             */
-/*   Updated: 2025/12/01 21:54:27 by ssujaude         ###   ########.fr       */
+/*   Updated: 2025/12/02 11:45:15 by ssujaude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-
-
-
-int is_format_specifier(char character)
+int	is_format_specifier(char character)
 {
-	if((character == 'c') || (character == 's') || (character == 'p') || (character == 'd')|| (character == 'i') || (character == 'u') || (character == 'x') || (character == 'X') || (character == '%'))
+	if ((character == 'c') || (character == 's') || (character == 'p')
+		|| (character == 'd') || (character == 'i') || (character == 'u')
+		|| (character == 'x') || (character == 'X') || (character == '%'))
 		return (1);
 	return (-1);
 }
 
-
-int is_format_flag(char character)
+static void	print_argument_support(char fs_val, t_flags *flags, int *printed,
+		va_list args)
 {
-	if((character == '+') || (character == '#') || (character == '-') || (character == ' ')|| (character == '0') || (character == '.'))
-		return (1);
-	return (-1);
-}
-
-
-void initiate_flags(fs_flags *flags)
-{
-	flags->plus = 0;
-	flags->left_align = 0;
-	flags->hashtag = 0;
-	flags->dot = 0;
-	flags->zero = 0;
-	flags->space = 0;
-	flags->width= 0;
-}
-
-
-
-
-
-int process_flag(char character, fs_flags *flags)
-{
-	if(is_format_flag(character) != -1)
+	if (fs_val)
 	{
-		if(character == '+')
+		if (is_format_specifier(fs_val) == 1)
 		{
-			flags->plus = 1;
-			flags->space = 0;
-		}
-		else if(character == '0')
-		{
-			if(flags->left_align != 1)
-				flags->zero = 1;
-		}
-		else if(character == '-')
-		{
-			flags->left_align = 1;
-			flags->zero = 0;
-		}
-		else if(character == '#')
-			flags->hashtag = 1;
-		else if(character == '.')
-		{
-			flags->dot = 1;
-			flags->zero = 0;
-		}
-		else if(character == ' ')
-		{
-			if(flags->plus == 0)
-				flags->space = 1;
-		}
-			
-
-		return (1);
-	}
-	return (0);
-}
-
-
-int process_numflag(char *str, fs_flags *flags)
-{
-	int value;
-
-	value = ft_atoi(str);
-
-	if(flags->dot == 1)
-		flags->precision = value;
-	else
-		flags->width = value;
-	
-	return (num_len(value));
-}
-
-
-int print_argument(char *str, int *printed, va_list args)
-{
-	int skip_val;
-	char fs_val;
-	int i;
-	fs_flags *flags;
-
-
-	flags = ft_calloc(1, sizeof(fs_flags));
-	i = 1;
-	skip_val = 1;
-	fs_val = *(str+1);
-	initiate_flags(flags);
-
-	while(*(str+i))
-	{
-		if(process_flag(*(str+i), flags) == 1)
-			i++;
-		else if(ft_isdigit(*(str+i)))
-			i+=process_numflag(str+i, flags);
-		else
-			break;
-	}
-	if(is_format_specifier(*(str+i)))
-		fs_val = *(str+i);
-
-	
-	if(fs_val)
-	{
-		if(is_format_specifier(fs_val) == 1)
-		{
-			if(fs_val == 'c')
+			if (fs_val == 'c')
 				*printed += print_character(va_arg(args, int), flags);
-			else if(fs_val == 's')
+			else if (fs_val == 's')
 				*printed += print_string(va_arg(args, char *), flags);
-			else if((fs_val == 'd') || (fs_val == 'i'))
+			else if ((fs_val == 'd') || (fs_val == 'i'))
 				*printed += print_number(va_arg(args, int), flags);
-			else if(fs_val == 'u')
+			else if (fs_val == 'u')
 				*printed += print_unsigned_number(va_arg(args, int), flags);
-			else if(fs_val == 'p')
+			else if (fs_val == 'p')
 				*printed += print_address(va_arg(args, void *), flags);
-			else if((fs_val == 'x') || (fs_val == 'X'))
-				*printed += print_hexnum(va_arg(args, unsigned int), fs_val, flags);
-			else if(fs_val == '%')
+			else if ((fs_val == 'x') || (fs_val == 'X'))
+				*printed += print_hexnum(va_arg(args, unsigned int), fs_val,
+						flags);
+			else if (fs_val == '%')
 				*printed += print_percentage();
 		}
 		else
-		{
-			//already printed
 			*printed += print_single_character(fs_val);
-		}
-	} 
-	
-	if(fs_val)
-		skip_val += i;
+	}
+}
 
-	// printf("\n ==> printed %c \n", fs_val);
-	//flag_printer(flags);
+static void	identify_flags(char *str, t_flags *flags, int *i)
+{
+	while (*(str + *i))
+	{
+		if (process_flag(*(str + *i), flags) == 1)
+			*i = *i + 1;
+		else if (ft_isdigit(*(str + *i)))
+			*i += process_numflag(str + *i, flags);
+		else
+			break ;
+	}
+}
+
+int	print_argument(char *str, int *printed, va_list args)
+{
+	int		skip_val;
+	char	fs_val;
+	int		i;
+	t_flags	*flags;
+
+	flags = ft_calloc(1, sizeof(t_flags));
+	i = 1;
+	skip_val = 1;
+	fs_val = *(str + 1);
+	initiate_flags(flags);
+	identify_flags(str, flags, &i);
+	if (is_format_specifier(*(str + i)))
+		fs_val = *(str + i);
+	print_argument_support(fs_val, flags, printed, args);
+	if (fs_val)
+		skip_val += i;
 	free(flags);
 	return (skip_val);
 }
 
-
-
-
-int ft_printf(const char * str, ...)
+int	ft_printf(const char *str, ...)
 {
-	// int arg_count;
-	int i;
-	int skip;
-	int printed;
+	int		i;
+	int		skip;
+	int		printed;
+	va_list	args;
 
-	// create the list
-	va_list args;
 	va_start(args, str);
-	
-
 	i = 0;
 	skip = 0;
 	printed = 0;
-	
-
-	while(str[i])
+	while (str[i])
 	{
-		// printf("\n ===> in ft_printf loop %d : %c", i, str[i]);
-		if(str[i] == '%')
+		if (str[i] == '%')
 		{
-			skip = print_argument((char *)(str+i), &printed, args);
+			skip = print_argument((char *)(str + i), &printed, args);
 			i += skip;
 		}
 		else
 		{
-			printed += write(1, (str+i), 1);
+			printed += write(1, (str + i), 1);
 			i++;
-		}	
+		}
 	}
-	
-	// clean the macro
 	va_end(args);
-
 	return (printed);
 }
